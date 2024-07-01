@@ -1,6 +1,8 @@
-package org.example.demo9.model;
+package org.example.demo9.model.spells;
 
-public class BoySpell implements Spell{
+import org.example.demo9.model.spells.Spell;
+
+public class BoySpell implements Spell {
     private int price=500;
 
     @Override

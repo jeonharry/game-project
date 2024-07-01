@@ -1,4 +1,6 @@
-package org.example.demo9.model;
+package org.example.demo9.model.spells;
+
+import org.example.demo9.model.spells.Spell;
 
 public class HealSpell implements Spell
 {

@@ -1,5 +1,7 @@
 package org.example.demo9.model;
 
+import org.example.demo9.model.spells.Spell;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 

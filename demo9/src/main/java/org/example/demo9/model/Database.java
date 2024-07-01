@@ -1,5 +1,7 @@
 package org.example.demo9.model;
 
+import org.example.demo9.model.spells.*;
+
 import java.sql.*;
 
 public class Database
@@ -87,5 +89,10 @@ public class Database
             player.getBackpack().add(spell);
         }
         return player;
+    }
+    public void addSpell(long ID,String spell,int price) throws SQLException {
+        String cmd=String.format("INSERT INTO backpacks (ID,spell,price) VALUES (%d,'%s',%d)",ID,spell,price);
+        Statement statement=con.prepareStatement(cmd);
+        statement.execute(cmd);
     }
 }

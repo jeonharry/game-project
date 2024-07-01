@@ -1,10 +1,11 @@
 package org.example.demo9.controller;
 
+import org.example.demo9.exceptions.NotEnoughGems;
 import org.example.demo9.exceptions.UserNameExist;
 import org.example.demo9.exceptions.WrongPassword;
 import org.example.demo9.exceptions.WrongUserName;
-import org.example.demo9.model.Database;
-import org.example.demo9.model.Player;
+import org.example.demo9.model.*;
+import org.example.demo9.model.spells.*;
 
 import java.sql.SQLException;
 
@@ -39,5 +40,22 @@ public class PlayerController
             throw new WrongPassword();
         player=Database.getDatabase().getPlayer(username,password);
         return true;
+    }
+    public void buySpell(String spellName) throws Exception {
+        Spell spell=null;
+        if(spellName.compareTo("heal")==0)
+            spell=new HealSpell();
+        else if(spellName.compareTo("coin")==0)
+            spell=new CoinSpell();
+        else if(spellName.compareTo("freeze")==0)
+            spell=new FreezeSpell();
+        else if(spellName.compareTo("boy")==0)
+            spell=new BoySpell();
+        else
+            throw new Exception("spell not found");
+        if(player.getGems()<spell.getPrice())
+            throw new NotEnoughGems();
+        Database.getDatabase().addSpell(player.getID(),spellName,spell.getPrice());
+        player.getBackpack().add(spell);
     }
 }

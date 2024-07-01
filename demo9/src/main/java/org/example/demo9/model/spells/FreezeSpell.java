@@ -1,6 +1,8 @@
-package org.example.demo9.model;
+package org.example.demo9.model.spells;
 
-public class FreezeSpell implements Spell{
+import org.example.demo9.model.spells.Spell;
+
+public class FreezeSpell implements Spell {
     private int price=350;
 
     @Override
