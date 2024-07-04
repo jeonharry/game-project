@@ -1,0 +1,16 @@
+.slider .track{
+    -fx-background-color: rgba(211,211,211,0.5);
+    -fx-background-radius: 5px;
+}
+.slider .track .fill {
+    -fx-background-color: orange;
+    -fx-background-radius: 5px;
+}
+.slider .thumb {
+    /*-fx-background-image: url('pics/images (124).png');*/
+    /*-fx-background-size: cover;*/
+    /*-fx-background-repeat: no-repeat;*/
+    -fx-background-radius: 50%;
+    -fx-pref-width: 18px;
+    -fx-pref-height: 18px;
+}

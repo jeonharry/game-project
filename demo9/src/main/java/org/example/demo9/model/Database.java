@@ -95,4 +95,38 @@ public class Database
         Statement statement=con.prepareStatement(cmd);
         statement.execute(cmd);
     }
+    public void updatePlayerInfoName(String username,long ID) throws SQLException {
+        String sqlCmd=String.format("UPDATE players SET username='%s' WHERE ID=%d",username,ID);
+        Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+    }
+    public void updatePlayerInfoPassword(String password,long ID) throws SQLException {
+        String sqlCmd=String.format("UPDATE players SET password='%s' WHERE ID=%d",password,ID);
+        Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+    }
+    public void login(Player player) throws SQLException {
+        String cmd="DELETE FROM logedin WHERE username='"+"NULL"+"'";
+        Statement statement=con.prepareStatement(cmd);
+        statement.execute(cmd);
+        cmd=String.format("INSERT INTO logedin (ID,username,password,level,gems) VALUES (%d,'%s','%s',%d,%d)", player.getID(),player.getUsername(),player.getPassword(),player.getLevel(),player.getGems());
+        statement=con.prepareStatement(cmd);
+        statement.execute(cmd);
+    }
+    public boolean checkLogin() throws SQLException {
+        String cmd="SELECT * From logedin";
+        Statement statement=con.prepareStatement(cmd);
+        ResultSet rs=statement.executeQuery(cmd);
+        while (rs.next())
+        {
+            if(rs.getString("username").compareTo("NULL")!=0)
+                return true;
+        }
+        return false;
+    }
+    public void logout(long ID) throws SQLException {
+        String sqlCmd=String.format("UPDATE logedin SET username='%s' WHERE ID=%d","NULL",ID);
+        Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+    }
 }

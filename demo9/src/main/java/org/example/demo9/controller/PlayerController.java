@@ -39,6 +39,7 @@ public class PlayerController
         if(!Database.getDatabase().checkPassword(username, password))
             throw new WrongPassword();
         player=Database.getDatabase().getPlayer(username,password);
+        Database.getDatabase().login(player);
         return true;
     }
     public void buySpell(String spellName) throws Exception {
@@ -57,5 +58,22 @@ public class PlayerController
             throw new NotEnoughGems();
         Database.getDatabase().addSpell(player.getID(),spellName,spell.getPrice());
         player.getBackpack().add(spell);
+    }
+    public void updateName(String username) throws SQLException, UserNameExist {
+        if(Database.getDatabase().checkExistence(username))
+            throw new UserNameExist();
+        player.setUsername(username);
+        Database.getDatabase().updatePlayerInfoName(username, player.getID());
+    }
+    public void updatePassword(String password) throws SQLException, UserNameExist {
+        player.setPassword(password);
+        Database.getDatabase().updatePlayerInfoPassword(password, player.getID());
+    }
+    public void logout() throws SQLException {
+        Database.getDatabase().logout(player.getID());
+        player=null;
+    }
+    public boolean checkLogin() throws SQLException {
+        return Database.getDatabase().checkLogin();
     }
 }

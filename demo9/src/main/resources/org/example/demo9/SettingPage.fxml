@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="460.0" prefWidth="840.0" style="-fx-background-color: #00000080;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.SettingPageController">
+   <children>
+      <VBox layoutX="172.0" layoutY="95.0" prefHeight="134.0" prefWidth="496.0" spacing="20.0" style="-fx-background-color: #382e2e; -fx-border-color: #6b6b6b; -fx-border-width: 3; -fx-background-radius: 10; -fx-border-radius: 9;">
+         <children>
+            <HBox prefHeight="34.0" prefWidth="496.0" style="-fx-background-radius: 20;">
+               <children>
+                  <StackPane fx:id="close_btn" onMouseClicked="#closePage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
+                     <children>
+                        <Line endX="62.19142532348633" endY="-22.982927322387695" rotate="45.0" startX="82.13573455810547" startY="-22.98287582397461" stroke="#ffffffd9" strokeLineCap="ROUND" strokeWidth="2.0" />
+                        <Line endX="62.19142532348633" endY="-22.982927322387695" rotate="-45.0" startX="82.13573455810547" startY="-22.98287582397461" stroke="#ffffffd9" strokeLineCap="ROUND" strokeWidth="2.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" top="3.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </StackPane>
+               </children>
+            </HBox>
+            <Slider fx:id="volume" stylesheets="@SliderStyle.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+            </Slider>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

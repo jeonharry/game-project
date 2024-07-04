@@ -3,6 +3,7 @@ module org.example.demo9 {
     requires javafx.fxml;
     requires java.sql;
     requires mysql.connector.java;
+    requires javafx.media;
 
 
     opens org.example.demo9 to javafx.fxml;
