@@ -3,6 +3,7 @@ package org.example.demo9;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.example.demo9.model.Database;
 import javafx.scene.media.Media;
@@ -20,7 +21,15 @@ public class Main extends Application {
         stage.setTitle("game");
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
+        try
+        {
+            stage.show();
+        }catch (Exception exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @Override

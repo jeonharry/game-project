@@ -99,10 +99,16 @@ public class Database
         String sqlCmd=String.format("UPDATE players SET username='%s' WHERE ID=%d",username,ID);
         Statement statement=con.prepareStatement(sqlCmd);
         statement.execute(sqlCmd);
+        sqlCmd=String.format("UPDATE logedin SET username='%s' WHERE ID=%d",username,ID);
+        statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
     }
     public void updatePlayerInfoPassword(String password,long ID) throws SQLException {
         String sqlCmd=String.format("UPDATE players SET password='%s' WHERE ID=%d",password,ID);
         Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+        sqlCmd=String.format("UPDATE logedin SET password='%s' WHERE ID=%d",password,ID);
+        statement=con.prepareStatement(sqlCmd);
         statement.execute(sqlCmd);
     }
     public void login(Player player) throws SQLException {
@@ -128,5 +134,35 @@ public class Database
         String sqlCmd=String.format("UPDATE logedin SET username='%s' WHERE ID=%d","NULL",ID);
         Statement statement=con.prepareStatement(sqlCmd);
         statement.execute(sqlCmd);
+    }
+    public Player getLogedInPlayer() throws SQLException {
+        String cmd="SELECT * FROM logedin";
+        Statement statement=con.prepareStatement(cmd);
+        ResultSet rs=statement.executeQuery(cmd);
+        Player player=null;
+        while (rs.next())
+        {
+            player=new Player(rs.getString("username"),rs.getString("password"));
+            player.setID(rs.getInt("ID"));
+            player.setLevel(rs.getInt("level"));
+            player.setGems(rs.getInt("gems"));
+        }
+        cmd="SELECT spell FROM backpacks WHERE ID="+player.getID();
+        statement=con.prepareStatement(cmd);
+        rs=statement.executeQuery(cmd);
+        while (rs.next())
+        {
+            Spell spell=null;
+            if(rs.getString("spell").compareTo("heal")==0)
+                spell=new HealSpell();
+            else if(rs.getString("spell").compareTo("coin")==0)
+                spell=new CoinSpell();
+            else if(rs.getString("spell").compareTo("freeze")==0)
+                spell=new FreezeSpell();
+            else if(rs.getString("spell").compareTo("boy")==0)
+                spell=new BoySpell();
+            player.getBackpack().add(spell);
+        }
+        return player;
     }
 }

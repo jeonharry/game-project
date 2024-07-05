@@ -1,6 +1,8 @@
 package org.example.demo9;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -67,8 +69,13 @@ public class SignupLoginPageController {
             {
                 error_lbl.setVisible(false);
                 PlayerController.getPlayerController().signUp(username.getText(),password.getText());
-                Controller.getController().getStartPageRoot().getChildren().removeLast();
-                //load next page
+                loginHBox.setVisible(false);
+                loginHBox.setDisable(true);
+                back_btn.setVisible(true);
+                signupLogin_lbl.setText("Login");
+                error_lbl.setVisible(false);
+                username.setText("");
+                password.setText("");
             }catch (Exception exception)
             {
                 error_lbl.setText(exception.getMessage());
@@ -83,7 +90,8 @@ public class SignupLoginPageController {
                 PlayerController.getPlayerController().login(username.getText(),password.getText());
                 Controller.getController().getStartPageRoot().getChildren().removeLast();
                 logIn(username.getText());
-                //load next page
+                FXMLLoader loader=new FXMLLoader(Main.class.getResource("GamePage.fxml"));
+                Main.getStage().setScene(new Scene(loader.load(),840,460));
             }catch (Exception exception)
             {
                 error_lbl.setText(exception.getMessage());

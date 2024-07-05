@@ -2,6 +2,7 @@ package org.example.demo9.controller;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 
@@ -12,6 +13,7 @@ public class Controller
     private StackPane loginStackPane;
     private Label logedInUsername;
     private ImageView logout_btn;
+    private AnchorPane gamePage;
     private Controller(){}
 
     public static Controller getController() {
@@ -50,5 +52,13 @@ public class Controller
 
     public void setLogout_btn(ImageView logout_btn) {
         this.logout_btn = logout_btn;
+    }
+
+    public AnchorPane getGamePage() {
+        return gamePage;
+    }
+
+    public void setGamePage(AnchorPane gamePage) {
+        this.gamePage = gamePage;
     }
 }

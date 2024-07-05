@@ -74,6 +74,11 @@ public class PlayerController
         player=null;
     }
     public boolean checkLogin() throws SQLException {
-        return Database.getDatabase().checkLogin();
+        if(Database.getDatabase().checkLogin())
+        {
+            player=Database.getDatabase().getLogedInPlayer();
+            return true;
+        }
+        return false;
     }
 }
