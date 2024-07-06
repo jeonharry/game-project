@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
+import org.example.demo9.model.Database;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,8 +54,10 @@ public class GamePageController implements Initializable {
     }
 
     @FXML
-    void playFirstMap(MouseEvent event) {
-
+    void playFirstMap(MouseEvent event) throws IOException {
+        MapController.setMap(Database.getDatabase().getMaps().getFirst());
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("Map.fxml"));
+        Main.getStage().setScene(new Scene(loader.load(),840,460));
     }
 
     @FXML
@@ -78,6 +81,25 @@ public class GamePageController implements Initializable {
         Controller.getController().setGamePage(root);
         level.setText("Lv."+String.valueOf(PlayerController.getPlayer().getLevel()));
         gems.setText(String.valueOf(PlayerController.getPlayer().getGems()));
+        if(PlayerController.getPlayer().getLevel()>=2)
+        {
+            firstMap.setImage(new Image(Main.class.getResource("pics/Clipped_image_20240705_112219.png").toExternalForm()));
+            secondMap.setVisible(true);
+        }
+        if(PlayerController.getPlayer().getLevel()>=3)
+        {
+            secondMap.setImage(new Image(Main.class.getResource("pics/Clipped_image_20240705_112219.png").toExternalForm()));
+            thirdMap.setVisible(true);
+        }
+        if(PlayerController.getPlayer().getLevel()>=4)
+        {
+            thirdMap.setImage(new Image(Main.class.getResource("pics/Clipped_image_20240705_112219.png").toExternalForm()));
+            forthMap.setVisible(true);
+        }
+        if(PlayerController.getPlayer().getLevel()>=5)
+        {
+            forthMap.setImage(new Image(Main.class.getResource("pics/Clipped_image_20240705_112219.png").toExternalForm()));
+        }
         //        MediaPlayer music=new MediaPlayer(new Media(""));
 //        volume.setValue(music.getVolume()*100);
 //        volume.valueProperty().addListener(new InvalidationListener() {

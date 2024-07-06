@@ -4,8 +4,8 @@ import org.example.demo9.model.towers.Tower;
 
 public class ArcherTower extends Tower
 {
-    public ArcherTower(int damage, int price, double domain)
+    public ArcherTower(double domain)
     {
-        super(damage, price, domain);
+        super(20,70 , domain);
     }
 }

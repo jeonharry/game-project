@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="460.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.MapController">
+   <children>
+      <ImageView fitHeight="472.0" fitWidth="854.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Screenshot_20240706_122243_Kingdom%20Rush.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="hearts" alignment="CENTER" layoutX="24.0" layoutY="20.0" prefHeight="18.0" prefWidth="72.0" style="-fx-background-color: #00000066; -fx-background-radius: 3;" text="20" textFill="#dfdfdf">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="36.0" fitWidth="40.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_122534.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="coins" alignment="CENTER" layoutX="116.0" layoutY="20.0" prefHeight="18.0" prefWidth="72.0" style="-fx-background-color: #00000066; -fx-background-radius: 3;" text="400" textFill="#dfdfdf">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="30.0" fitWidth="38.0" layoutX="96.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_122600.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="waves" alignment="CENTER" layoutX="48.0" layoutY="42.0" prefHeight="18.0" prefWidth="120.0" style="-fx-background-color: #00000066; -fx-background-radius: 3;" text="0/10" textFill="#dfdfdf">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="33.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_122626.png" />
+         </image>
+      </ImageView>
+      <Circle fill="#ff212100" layoutX="374.0" layoutY="51.0" onMouseClicked="#start" radius="19.0" stroke="TRANSPARENT" strokeType="INSIDE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Circle>
+   </children>
+</AnchorPane>

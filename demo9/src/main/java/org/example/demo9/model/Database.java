@@ -3,6 +3,7 @@ package org.example.demo9.model;
 import org.example.demo9.model.spells.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database
 {
@@ -11,12 +12,22 @@ public class Database
     private String userName="root";
     private String password="*JungKook1997";
     private Connection con;
+    private ArrayList <Map> maps=new ArrayList<>();
     private Database(){}
     public static Database getDatabase() {
         if(database==null)
             database=new Database();
         return database;
     }
+
+    public ArrayList<Map> getMaps() {
+        return maps;
+    }
+
+    public void setMaps(ArrayList<Map> maps) {
+        this.maps = maps;
+    }
+
     public void makeConnection() throws Exception{
         Class.forName("com.mysql.cj.jdbc.Driver");
         con= DriverManager.getConnection(url,userName,password);

@@ -1,9 +1,11 @@
 package org.example.demo9.controller;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Ellipse;
 
 
 public class Controller
@@ -14,7 +16,13 @@ public class Controller
     private Label logedInUsername;
     private ImageView logout_btn;
     private AnchorPane gamePage;
+    private Node selectedTower;
+    private AnchorPane map;
     private Label gems;
+    private Label coins;
+    private Label hearts;
+    private Label waves;
+    private Ellipse towerPlace;
     private Controller(){}
 
     public static Controller getController() {
@@ -69,5 +77,53 @@ public class Controller
 
     public void setGems(Label gems) {
         this.gems = gems;
+    }
+
+    public void setSelectedTower(Node selectedTower) {
+        this.selectedTower = selectedTower;
+    }
+
+    public Node getSelectedTower() {
+        return selectedTower;
+    }
+
+    public void setMap(AnchorPane map) {
+        this.map = map;
+    }
+
+    public AnchorPane getMap() {
+        return map;
+    }
+
+    public Label getCoins() {
+        return coins;
+    }
+
+    public void setCoins(Label coins) {
+        this.coins = coins;
+    }
+
+    public Label getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(Label hearts) {
+        this.hearts = hearts;
+    }
+
+    public Label getWaves() {
+        return waves;
+    }
+
+    public void setWaves(Label waves) {
+        this.waves = waves;
+    }
+
+    public Ellipse getTowerPlace() {
+        return towerPlace;
+    }
+
+    public void setTowerPlace(Ellipse towerPlace) {
+        this.towerPlace = towerPlace;
     }
 }

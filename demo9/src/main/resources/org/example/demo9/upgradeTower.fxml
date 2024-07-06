@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="afterBuild" disable="true" prefHeight="130.0" prefWidth="130.0" style="-fx-background-color: TRANSPARENT;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="126.0" fitWidth="117.0" layoutX="17.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_143927.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="upgradeTick" fitHeight="24.0" fitWidth="40.0" layoutX="52.0" layoutY="10.0" onMouseClicked="#upgrade" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Screenshot_20240706_142825_Kingdom%20Rush.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label fx:id="upgradePrice" alignment="CENTER" layoutX="55.0" layoutY="37.0" prefHeight="8.0" prefWidth="22.0" style="-fx-background-color: #281b16;" text="200" textFill="#c3c700">
+         <font>
+            <Font size="8.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="sellTick" fitHeight="24.0" fitWidth="21.0" layoutX="55.0" layoutY="125.0" onMouseClicked="#sell" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Screenshot_20240706_142825_Kingdom%20Rush.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>

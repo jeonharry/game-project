@@ -31,6 +31,7 @@ public class PlayerController
         if(Database.getDatabase().checkExistence(username))
             throw new UserNameExist();
         Player newPlayer=new Player(username,password);
+        newPlayer.setGems(400);
         Database.getDatabase().addNewPlayer(newPlayer);
     }
     public boolean login(String username,String password) throws Exception {
