@@ -44,20 +44,35 @@ public class PlayerController
     }
     public void buySpell(String spellName) throws Exception {
         Spell spell=null;
+        int price=0;
         if(spellName.compareTo("heal")==0)
+        {
             spell=new HealSpell();
+            price=HealSpell.getPrice();
+        }
         else if(spellName.compareTo("coin")==0)
+        {
             spell=new CoinSpell();
+            price=CoinSpell.getPrice();
+        }
         else if(spellName.compareTo("freeze")==0)
+        {
             spell=new FreezeSpell();
+            price=FreezeSpell.getPrice();
+        }
         else if(spellName.compareTo("boy")==0)
+        {
             spell=new BoySpell();
+            price=BoySpell.getPrice();
+        }
         else
             throw new Exception("spell not found");
-        if(player.getGems()<spell.getPrice())
+        if(player.getGems()<price)
             throw new NotEnoughGems();
-        Database.getDatabase().addSpell(player.getID(),spellName,spell.getPrice());
+        player.setGems(player.getGems()-price);
+        Database.getDatabase().addSpell(player.getID(),spellName,price);
         player.getBackpack().add(spell);
+        Database.getDatabase().updatePlayerInfoGema(player.getGems(),player.getID());
     }
     public void updateName(String username) throws SQLException, UserNameExist {
         if(Database.getDatabase().checkExistence(username))
@@ -80,5 +95,41 @@ public class PlayerController
             return true;
         }
         return false;
+    }
+    public long getBoySpellAmount()
+    {
+        long counter = 0;
+        for(Spell temp: getPlayer().getBackpack())
+            if(temp!=null && temp instanceof BoySpell)
+                counter++;
+        return counter;
+    }
+    public long getFreezeSpellAmount()
+    {
+        long counter = 0;
+        for(Spell temp: getPlayer().getBackpack())
+            if(temp instanceof FreezeSpell)
+                counter++;
+        return counter;
+    }
+    public long getHealSpellAmount()
+    {
+        long counter = 0;
+        for(Spell temp: getPlayer().getBackpack())
+            if(temp instanceof HealSpell)
+                counter++;
+        return counter;
+    }
+    public long getCoinSpellAmount()
+    {
+        long counter = 0;
+        for(Spell temp: getPlayer().getBackpack())
+            if(temp instanceof CoinSpell)
+                counter++;
+        return counter;
+    }
+    public void updateLevel(long level) throws SQLException {
+        player.setLevel(level);
+        Database.getDatabase().updatePlayerInfoLevel(level, player.getID());
     }
 }

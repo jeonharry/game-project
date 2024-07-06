@@ -43,7 +43,7 @@ public class StartPageController implements Initializable {
     }
 
     @FXML
-    void start(MouseEvent event) throws SQLException, IOException {
+    void start(MouseEvent event) {
         try
         {
             if(!PlayerController.getPlayerController().checkLogin())
@@ -60,7 +60,6 @@ public class StartPageController implements Initializable {
             alert.setTitle("error");
             alert.setHeaderText(exception.getMessage());
             alert.showAndWait();
-            throw exception;
         }
     }
 

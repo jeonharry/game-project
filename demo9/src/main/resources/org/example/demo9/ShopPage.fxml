@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="460.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.ShopPageController">
+   <children>
+      <ImageView fitHeight="486.0" fitWidth="849.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Screenshot_20240706_085920_Kingdom%20Rush.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="56.0" layoutX="660.0" layoutY="408.0" onMouseClicked="#finish" stroke="TRANSPARENT" strokeType="INSIDE" width="99.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="56.0" layoutX="513.0" layoutY="211.0" onMouseClicked="#buy" stroke="TRANSPARENT" strokeType="INSIDE" width="141.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Label fx:id="gems" alignment="CENTER" layoutX="241.0" layoutY="25.0" prefHeight="26.0" prefWidth="75.0" style="-fx-background-color: #634b2b; -fx-background-radius: 10;" text="81" textFill="#fffed8">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="price" layoutX="649.0" layoutY="51.0" prefHeight="34.0" prefWidth="60.0" style="-fx-background-color: #032003; -fx-background-radius: 10;" text="500" textFill="#fffed8">
+         <font>
+            <Font name="Rockwell" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="spellName" layoutX="437.0" layoutY="46.0" prefHeight="26.0" prefWidth="128.0" style="-fx-background-color: #053609; -fx-background-radius: 10;" text="Little Boy" textFill="#fffed8">
+         <font>
+            <Font name="Rockwell" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="spellInfo" alignment="TOP_LEFT" layoutX="436.0" layoutY="90.0" prefHeight="112.0" prefWidth="280.0" style="-fx-background-color: #053609; -fx-background-radius: 10;" textFill="#fffed8">
+         <font>
+            <Font name="Rockwell" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="471.0" layoutY="416.0" prefHeight="26.0" prefWidth="42.0" style="-fx-background-color: #dccc98; -fx-background-radius: 10;" text="500" textFill="#533f2b">
+         <font>
+            <Font name="Rockwell Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="569.0" layoutY="389.0" prefHeight="22.0" prefWidth="42.0" style="-fx-background-color: #dccc98; -fx-background-radius: 10;" text="400" textFill="#533f2b">
+         <font>
+            <Font name="Rockwell Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="204.0" layoutY="408.0" prefHeight="34.0" prefWidth="36.0" style="-fx-background-color: #dccc98; -fx-background-radius: 20;" text="300" textFill="#533f2b">
+         <font>
+            <Font name="Rockwell Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="307.0" layoutY="340.0" prefHeight="26.0" prefWidth="36.0" rotate="-25.0" style="-fx-background-color: #dccc98; -fx-background-radius: 10;" text="350" textFill="#533f2b">
+         <font>
+            <Font name="Rockwell Bold" size="18.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="190.0" layoutX="413.0" layoutY="254.0" onMouseClicked="#selectBoy" stroke="TRANSPARENT" strokeType="INSIDE" width="99.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="112.0" layoutX="155.0" layoutY="331.0" onMouseClicked="#selectHeal" stroke="TRANSPARENT" strokeType="INSIDE" width="99.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="124.0" layoutX="265.0" layoutY="319.0" onMouseClicked="#selectFreeze" stroke="TRANSPARENT" strokeType="INSIDE" width="75.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="112.0" layoutX="546.0" layoutY="317.0" onMouseClicked="#selectCoin" stroke="TRANSPARENT" strokeType="INSIDE" width="75.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <VBox layoutX="71.0" layoutY="68.0" prefHeight="268.0" prefWidth="60.0" style="-fx-background-color: #00000066; -fx-background-radius: 10;">
+         <children>
+            <AnchorPane prefHeight="81.0" prefWidth="83.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="42.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091219.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="boyAmount" alignment="CENTER" layoutX="4.0" layoutY="36.0" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2" />
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="81.0" prefWidth="83.0">
+               <children>
+                  <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="5.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091357.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="freezeAmount" alignment="CENTER" layoutX="4.0" layoutY="36.0" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="81.0" prefWidth="83.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="42.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091241.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="coinAmount" alignment="CENTER" layoutX="4.0" layoutY="36.0" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="81.0" prefWidth="83.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="42.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091307.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="healAmount" alignment="CENTER" layoutX="4.0" layoutY="36.0" prefHeight="22.0" prefWidth="22.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <ImageView fitHeight="81.0" fitWidth="91.0" layoutX="60.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_090059.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

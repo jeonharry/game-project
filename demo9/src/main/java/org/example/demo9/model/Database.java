@@ -165,4 +165,20 @@ public class Database
         }
         return player;
     }
+    public void updatePlayerInfoGema(long gems,long ID) throws SQLException {
+        String sqlCmd=String.format("UPDATE players SET gems='%s' WHERE ID=%d",gems,ID);
+        Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+        sqlCmd=String.format("UPDATE logedin SET gems='%s' WHERE ID=%d",gems,ID);
+        statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+    }
+    public void updatePlayerInfoLevel(long level,long ID) throws SQLException {
+        String sqlCmd=String.format("UPDATE players SET level='%s' WHERE ID=%d",level,ID);
+        Statement statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+        sqlCmd=String.format("UPDATE logedin SET level='%s' WHERE ID=%d",level,ID);
+        statement=con.prepareStatement(sqlCmd);
+        statement.execute(sqlCmd);
+    }
 }

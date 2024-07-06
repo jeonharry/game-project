@@ -3,15 +3,19 @@ package org.example.demo9.model.spells;
 import org.example.demo9.model.spells.Spell;
 
 public class FreezeSpell implements Spell {
-    private int price=350;
+    private static int price=350;
+    private static String info="THIS SPECIAL CONCOCTION WILL FREEZE \nYOUR ENEMIES HELPLESS IN PLACE FOR \nA WHILE.";
 
-    @Override
-    public int getPrice() {
+    public static int getPrice() {
         return price;
     }
 
     @Override
     public void drop() {
 
+    }
+
+    public static String getInfo() {
+        return info;
     }
 }

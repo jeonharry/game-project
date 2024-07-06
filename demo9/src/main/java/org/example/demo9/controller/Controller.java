@@ -14,6 +14,7 @@ public class Controller
     private Label logedInUsername;
     private ImageView logout_btn;
     private AnchorPane gamePage;
+    private Label gems;
     private Controller(){}
 
     public static Controller getController() {
@@ -60,5 +61,13 @@ public class Controller
 
     public void setGamePage(AnchorPane gamePage) {
         this.gamePage = gamePage;
+    }
+
+    public Label getGems() {
+        return gems;
+    }
+
+    public void setGems(Label gems) {
+        this.gems = gems;
     }
 }
