@@ -1,5 +1,6 @@
 package org.example.demo9.model.spells;
 
+import org.example.demo9.controller.Controller;
 import org.example.demo9.model.spells.Spell;
 
 public class HealSpell implements Spell
@@ -13,7 +14,11 @@ public class HealSpell implements Spell
 
     @Override
     public void drop() {
-
+        int hearts=Integer.parseInt(Controller.getController().getHearts().getText())+5;
+        if(hearts<20)
+            Controller.getController().getHearts().setText(String.valueOf(hearts));
+        else
+            Controller.getController().getHearts().setText(String.valueOf(20));
     }
 
     public static String getInfo() {

@@ -37,20 +37,16 @@ public abstract class Tower
     private ImageView level3;
     private ImageView level4;
     private ImageView level5;
-    public Tower(int damage,int price,int upgradePrice,double domain) throws IOException {
-//        tower.setFitWidth(65); tower.setFitHeight(50); tower.setPreserveRatio(true);
+    private ImageView arrow;
+    public Tower(int damage,int price,int upgradePrice,double domain,String towerImage) throws IOException {
         TowerController.setTower(this);
         FXMLLoader loader=new FXMLLoader(Main.class.getResource("Tower.fxml"));
         this.tower=loader.load();
-        this.towerImage.setImage(new Image(Main.class.getResource("pics/archer1.png").toExternalForm()));
+        this.towerImage.setImage(new Image(Main.class.getResource(towerImage).toExternalForm()));
         this.damage=damage;
         this.domain=domain;
         this.price=price;
         this.upgradePrice=upgradePrice;
-        imagesForAnimate.add(new Image(Main.class.getResource("pics/archer1.png").toExternalForm()));
-        imagesForAnimate.add(new Image(Main.class.getResource("pics/archer2.png").toExternalForm()));
-        imagesForAnimate.add(new Image(Main.class.getResource("pics/archer3.png").toExternalForm()));
-        imagesForAnimate.add(new Image(Main.class.getResource("pics/archer4.png").toExternalForm()));
         tower.setCursor(Cursor.HAND);
     }
 
@@ -150,28 +146,36 @@ public abstract class Tower
         this.tower = tower;
     }
 
+    public ArrayList<Image> getImagesForAnimate() {
+        return imagesForAnimate;
+    }
+
+    public void setImagesForAnimate(ArrayList<Image> imagesForAnimate) {
+        this.imagesForAnimate = imagesForAnimate;
+    }
+
+    public ImageView getArrow() {
+        return arrow;
+    }
+
+    public void setArrow(ImageView arrow) {
+        this.arrow = arrow;
+    }
+
     public void animation()
     {
         Timeline timeline=new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100),event -> {
-            if(animate)
-                towerImage.setImage(imagesForAnimate.getFirst());
-            else
-                towerImage.setImage(imagesForAnimate.getFirst());
-        }));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300),event -> {
-            if(animate)
-                towerImage.setImage(imagesForAnimate.get(1));
-        }));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),event -> {
-            if (animate)
-                towerImage.setImage(imagesForAnimate.get(2));
-        }));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(700),event -> {
-            if(animate)
-                towerImage.setImage(imagesForAnimate.get(3));
-        }));
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(900),event -> {
+        int i = 0;
+        for(i=0;i<imagesForAnimate.size();++i) {
+            int finalI = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150+i*150), event -> {
+                if(animate)
+                    towerImage.setImage(imagesForAnimate.get(finalI));
+                else
+                    towerImage.setImage(imagesForAnimate.getFirst());
+            }));
+        }
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i*150+150),event -> {
             if(animate)
                 towerImage.setImage(imagesForAnimate.getFirst());
         }));
@@ -225,5 +229,12 @@ public abstract class Tower
             level4.setVisible(true);
         if(this.getLevel()>4)
             level5.setVisible(true);
+    }
+    public void damage()
+    {
+        this.getArrow().setPreserveRatio(true); this.getArrow().setLayoutX(this.getTower().getLayoutX()+40); this.getArrow().setLayoutY(this.getTower().getLayoutY()+10);
+        this.getArrow().setFitHeight(12); this.getArrow().setFitHeight(12);
+        Controller.getController().getMap().getChildren().add(arrow);
+        //transition & damage
     }
 }

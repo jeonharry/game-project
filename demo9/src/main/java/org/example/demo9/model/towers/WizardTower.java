@@ -1,11 +1,21 @@
 package org.example.demo9.model.towers;
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.example.demo9.Main;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WizardTower extends Tower
 {
     public WizardTower( double domain) throws IOException {
-        super(25, 100, 110,domain);
+        super(25, 100, 110,domain,"pics/wizard1.png");
+        ArrayList<Image> imagesForAnimate=new ArrayList<>();
+        imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard1.png").toExternalForm()));
+        imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard2.png").toExternalForm()));
+        this.setImagesForAnimate(imagesForAnimate);
+        this.setArrow(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_172920.png").toExternalForm())));
     }
 }

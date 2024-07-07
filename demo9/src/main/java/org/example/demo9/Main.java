@@ -62,7 +62,7 @@ public class Main extends Application {
         towerPlaces.add(295.0); towerPlaces.add(351.0);
         towerPlaces.add(503.0); towerPlaces.add(364.0);
         towerPlaces.add(617.0); towerPlaces.add(419.0);
-        Map firstMap=new Map(250,towerPlaces,new ArrayList<>(),end,10);
+        Map firstMap=new Map(250,towerPlaces,new ArrayList<>(),end,5);
         Database.getDatabase().getMaps().add(firstMap);
     }
 }

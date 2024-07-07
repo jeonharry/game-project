@@ -1,5 +1,6 @@
 package org.example.demo9.model.spells;
 
+import org.example.demo9.controller.Controller;
 import org.example.demo9.model.spells.Spell;
 
 public class CoinSpell implements Spell {
@@ -13,7 +14,7 @@ public class CoinSpell implements Spell {
 
     @Override
     public void drop() {
-
+        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+200));
     }
 
     public static String getInfo() {

@@ -103,7 +103,6 @@ public class TowerGeneratorController implements Initializable {
                 alert.setHeaderText(exception.getMessage());
                 alert.showAndWait();
             }
-//            archerTower.animation();
         }
         else
             showError();
@@ -112,7 +111,6 @@ public class TowerGeneratorController implements Initializable {
 
     @FXML
     void selectBomb(MouseEvent event) {
-        //build tower
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.BOMB.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.BOMB.getPrice()));
@@ -121,6 +119,34 @@ public class TowerGeneratorController implements Initializable {
                 Artillery artillery=new Artillery(60);
                 map.getTowers().add(artillery);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+                artillery.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
+                artillery.getTower().setLayoutY(Controller.getController().getSelectedTower().getLayoutY()+65-35);
+                Controller.getController().getMap().getChildren().add(artillery.getTower());
+                artillery.getTower().setOnMouseClicked(e -> {
+                    if(Controller.getController().getPageForUpgrade()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getPageForUpgrade());
+                        Controller.getController().setPageForUpgrade(null);
+                    }
+                    if(Controller.getController().getSelectedTower()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTower());
+                        Controller.getController().setSelectedTower(null);
+                    }
+                    FXMLLoader loader=new FXMLLoader(Main.class.getResource("UpgradeTower.fxml"));
+                    try {
+                        UpgradeTowerController.setTower(artillery);
+                        Node child=loader.load(); child.setLayoutY(artillery.getTower().getLayoutY()-50); child.setLayoutX(artillery.getTower().getLayoutX()-40);
+                        Controller.getController().setSelectedTowerUpgrade(child);
+                        Controller.getController().getMap().getChildren().add(child);
+                        Controller.getController().setPageForUpgrade(child);
+                    } catch (IOException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("error");
+                        alert.setHeaderText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+                });
             }catch (Exception exception){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("error");
@@ -135,7 +161,6 @@ public class TowerGeneratorController implements Initializable {
 
     @FXML
     void selectDef(MouseEvent event) {
-        //build tower
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.DEF.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.DEF.getPrice()));
@@ -144,6 +169,35 @@ public class TowerGeneratorController implements Initializable {
                 DefendTower defendTower=new DefendTower(85);
                 map.getTowers().add(defendTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+                defendTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
+                defendTower.getTower().setLayoutY(Controller.getController().getSelectedTower().getLayoutY()+65-35);
+                Controller.getController().getMap().getChildren().add(defendTower.getTower());
+                defendTower.getTower().setOnMouseClicked(e -> {
+                    if(Controller.getController().getPageForUpgrade()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getPageForUpgrade());
+                        Controller.getController().setPageForUpgrade(null);
+                    }
+                    if(Controller.getController().getSelectedTower()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTower());
+                        Controller.getController().setSelectedTower(null);
+                    }
+                    FXMLLoader loader=new FXMLLoader(Main.class.getResource("UpgradeTower.fxml"));
+                    try {
+                        UpgradeTowerController.setTower(defendTower);
+                        Node child=loader.load(); child.setLayoutY(defendTower.getTower().getLayoutY()-50); child.setLayoutX(defendTower.getTower().getLayoutX()-40);
+                        Controller.getController().setSelectedTowerUpgrade(child);
+                        Controller.getController().getMap().getChildren().add(child);
+                        Controller.getController().setPageForUpgrade(child);
+                    } catch (IOException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("error");
+                        alert.setHeaderText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+                });
+                defendTower.animation();
             }catch (Exception exception){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("error");
@@ -158,7 +212,6 @@ public class TowerGeneratorController implements Initializable {
 
     @FXML
     void selectWizard(MouseEvent event) {
-        //build tower
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.WIZARD.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.WIZARD.getPrice()));
@@ -167,6 +220,34 @@ public class TowerGeneratorController implements Initializable {
                 WizardTower wizardTower=new WizardTower(70);
                 map.getTowers().add(wizardTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+                wizardTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
+                wizardTower.getTower().setLayoutY(Controller.getController().getSelectedTower().getLayoutY()+65-35);
+                Controller.getController().getMap().getChildren().add(wizardTower.getTower());
+                wizardTower.getTower().setOnMouseClicked(e -> {
+                    if(Controller.getController().getPageForUpgrade()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getPageForUpgrade());
+                        Controller.getController().setPageForUpgrade(null);
+                    }
+                    if(Controller.getController().getSelectedTower()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTower());
+                        Controller.getController().setSelectedTower(null);
+                    }
+                    FXMLLoader loader=new FXMLLoader(Main.class.getResource("UpgradeTower.fxml"));
+                    try {
+                        UpgradeTowerController.setTower(wizardTower);
+                        Node child=loader.load(); child.setLayoutY(wizardTower.getTower().getLayoutY()-50); child.setLayoutX(wizardTower.getTower().getLayoutX()-40);
+                        Controller.getController().setSelectedTowerUpgrade(child);
+                        Controller.getController().getMap().getChildren().add(child);
+                        Controller.getController().setPageForUpgrade(child);
+                    } catch (IOException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("error");
+                        alert.setHeaderText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+                });
             }catch (Exception exception)
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
