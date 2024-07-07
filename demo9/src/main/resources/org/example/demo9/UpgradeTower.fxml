@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="130.0" style="-fx-background-color: TRANSPARENT;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.UpgradeTowerController">
+   <children>
+      <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="12.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_143927.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="27.0" layoutX="50.0" layoutY="6.0" onMouseClicked="#pickUpgrade" stroke="TRANSPARENT" strokeType="INSIDE" width="30.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="27.0" layoutX="49.0" layoutY="105.0" onMouseClicked="#pickSell" stroke="TRANSPARENT" strokeType="INSIDE" width="28.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <ImageView fx:id="upgradeTick" fitHeight="24.0" fitWidth="23.0" layoutX="53.0" layoutY="8.0" onMouseClicked="#upgrade" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Screenshot_20240706_142825_Kingdom%20Rush.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="sellTick" fitHeight="24.0" fitWidth="20.0" layoutX="53.0" layoutY="109.0" onMouseClicked="#sell" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Screenshot_20240706_142825_Kingdom%20Rush.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label fx:id="upgradePrice" alignment="CENTER" layoutX="54.0" layoutY="32.0" prefHeight="9.0" prefWidth="20.0" style="-fx-background-color: #281b16;" text="Label" textFill="#ccca4c">
+         <font>
+            <Font name="System Bold" size="8.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

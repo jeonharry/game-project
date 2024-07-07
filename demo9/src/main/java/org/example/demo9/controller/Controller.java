@@ -16,13 +16,15 @@ public class Controller
     private Label logedInUsername;
     private ImageView logout_btn;
     private AnchorPane gamePage;
-    private Node selectedTower;
+    private Node selectedTower=null;
     private AnchorPane map;
     private Label gems;
     private Label coins;
     private Label hearts;
     private Label waves;
     private Ellipse towerPlace;
+    private Node selectedTowerUpgrade;
+    private Node pageForUpgrade=null;
     private Controller(){}
 
     public static Controller getController() {
@@ -125,5 +127,21 @@ public class Controller
 
     public void setTowerPlace(Ellipse towerPlace) {
         this.towerPlace = towerPlace;
+    }
+
+    public Node getSelectedTowerUpgrade() {
+        return selectedTowerUpgrade;
+    }
+
+    public void setSelectedTowerUpgrade(Node selectedTowerUpgrade) {
+        this.selectedTowerUpgrade = selectedTowerUpgrade;
+    }
+
+    public Node getPageForUpgrade() {
+        return pageForUpgrade;
+    }
+
+    public void setPageForUpgrade(Node pageForUpgrade) {
+        this.pageForUpgrade = pageForUpgrade;
     }
 }

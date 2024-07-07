@@ -1,7 +1,9 @@
 package org.example.demo9;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -11,6 +13,7 @@ import org.example.demo9.controller.Controller;
 import org.example.demo9.model.Map;
 import org.example.demo9.model.towers.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -62,12 +65,44 @@ public class TowerGeneratorController implements Initializable {
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.ARCHER.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.ARCHER.getPrice()));
-            ArcherTower archerTower=new ArcherTower(70);
-            map.getTowers().add(archerTower);
-            Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
-            archerTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
-            archerTower.getTower().setLayoutY(Controller.getController().getSelectedTower().getLayoutY()+65-35);
-            Controller.getController().getMap().getChildren().add(archerTower.getTower());
+            try{
+                ArcherTower archerTower=new ArcherTower(70);
+                map.getTowers().add(archerTower);
+                Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+                archerTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
+                archerTower.getTower().setLayoutY(Controller.getController().getSelectedTower().getLayoutY()+65-35);
+                Controller.getController().getMap().getChildren().add(archerTower.getTower());
+                archerTower.getTower().setOnMouseClicked(e -> {
+                    if(Controller.getController().getPageForUpgrade()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getPageForUpgrade());
+                        Controller.getController().setPageForUpgrade(null);
+                    }
+                    if(Controller.getController().getSelectedTower()!=null)
+                    {
+                        Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTower());
+                        Controller.getController().setSelectedTower(null);
+                    }
+                    FXMLLoader loader=new FXMLLoader(Main.class.getResource("UpgradeTower.fxml"));
+                    try {
+                        UpgradeTowerController.setTower(archerTower);
+                        Node child=loader.load(); child.setLayoutY(archerTower.getTower().getLayoutY()-50); child.setLayoutX(archerTower.getTower().getLayoutX()-40);
+                        Controller.getController().setSelectedTowerUpgrade(child);
+                        Controller.getController().getMap().getChildren().add(child);
+                        Controller.getController().setPageForUpgrade(child);
+                    } catch (IOException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("error");
+                        alert.setHeaderText(ex.getMessage());
+                        alert.showAndWait();
+                    }
+                });
+            }catch (Exception exception){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("error");
+                alert.setHeaderText(exception.getMessage());
+                alert.showAndWait();
+            }
 //            archerTower.animation();
         }
         else
@@ -81,9 +116,17 @@ public class TowerGeneratorController implements Initializable {
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.BOMB.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.BOMB.getPrice()));
-            Artillery artillery=new Artillery(60);
-            map.getTowers().add(artillery);
-            Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            try
+            {
+                Artillery artillery=new Artillery(60);
+                map.getTowers().add(artillery);
+                Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            }catch (Exception exception){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("error");
+                alert.setHeaderText(exception.getMessage());
+                alert.showAndWait();
+            }
         }
         else
             showError();
@@ -96,9 +139,17 @@ public class TowerGeneratorController implements Initializable {
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.DEF.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.DEF.getPrice()));
-            DefendTower defendTower=new DefendTower(85);
-            map.getTowers().add(defendTower);
-            Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            try
+            {
+                DefendTower defendTower=new DefendTower(85);
+                map.getTowers().add(defendTower);
+                Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            }catch (Exception exception){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("error");
+                alert.setHeaderText(exception.getMessage());
+                alert.showAndWait();
+            }
         }
         else
             showError();
@@ -111,23 +162,22 @@ public class TowerGeneratorController implements Initializable {
         if(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.WIZARD.getPrice()>=0)
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.WIZARD.getPrice()));
-            WizardTower wizardTower=new WizardTower(70);
-            map.getTowers().add(wizardTower);
-            Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            try
+            {
+                WizardTower wizardTower=new WizardTower(70);
+                map.getTowers().add(wizardTower);
+                Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
+            }catch (Exception exception)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("error");
+                alert.setHeaderText(exception.getMessage());
+                alert.showAndWait();
+            }
         }
         else
             showError();
         Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTower());
-    }
-
-    @FXML
-    void sell(MouseEvent event) {
-
-    }
-
-    @FXML
-    void upgrade(MouseEvent event) {
-
     }
 
     @FXML

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -32,7 +33,6 @@ public class MapController implements Initializable {
     @FXML
     private Label waves;
     private static Map map;
-    private Node selectedTower=null;
 
     private ArrayList <Node> heroPlaces=new ArrayList<>();
 
@@ -48,11 +48,12 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //play music
         Controller.getController().setCoins(coins);
         Controller.getController().setHearts(hearts);
         Controller.getController().setWaves(waves);
         Controller.getController().setMap(root);
-        waves.setText(String.valueOf(map.getAttackWaves()));
+        waves.setText("0/"+String.valueOf(map.getAttackWaves()));
         coins.setText(String.valueOf(map.getCoins()));
         for(int i=0;i<map.getTowerPlaces().size();i++)
             if(map.getTowerPlaces().get(i)!=null)
@@ -62,20 +63,27 @@ public class MapController implements Initializable {
                 root.getChildren().add(tower);
                 tower.setOnMouseClicked(event -> {
                     try {
-                        if(selectedTower!=null)
+                        if(Controller.getController().getSelectedTower()!=null)
                         {
-                            root.getChildren().remove(selectedTower);
+                            root.getChildren().remove(Controller.getController().getSelectedTower());
                             Controller.getController().setSelectedTower(null);
+                        }
+                        if(Controller.getController().getPageForUpgrade()!=null)
+                        {
+                            root.getChildren().remove(Controller.getController().getPageForUpgrade());
+                            Controller.getController().setPageForUpgrade(null);
                         }
                         Node child=new FXMLLoader(Main.class.getResource("TowerGenerator.fxml")).load();
                         child.setLayoutX(tower.getLayoutX()-65); child.setLayoutY(tower.getLayoutY()-65);
                         TowerGeneratorController.setMap(map);
                         root.getChildren().add(child);
-                        selectedTower=child;
                         Controller.getController().setSelectedTower(child);
                         Controller.getController().setTowerPlace(tower);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("error");
+                        alert.setHeaderText(e.getMessage());
+                        alert.showAndWait();
                     }
                 });
             }

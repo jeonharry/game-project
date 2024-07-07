@@ -9,7 +9,6 @@ import org.example.demo9.model.Database;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.example.demo9.model.Map;
-import org.example.demo9.model.towers.TowerPrices;
 
 import java.util.ArrayList;
 

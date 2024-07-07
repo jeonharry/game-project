@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="50.0" prefWidth="65.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.TowerController">
+   <children>
+      <ImageView fx:id="towerImage" fitHeight="50.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/archer1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level1" fitHeight="12.0" fitWidth="12.0" layoutX="3.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240705_114203.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level2" fitHeight="12.0" fitWidth="12.0" layoutX="14.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Clipped_image_20240705_114203.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level3" fitHeight="12.0" fitWidth="12.0" layoutX="24.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Clipped_image_20240705_114203.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level4" fitHeight="12.0" fitWidth="12.0" layoutX="34.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Clipped_image_20240705_114203.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level5" fitHeight="12.0" fitWidth="12.0" layoutX="43.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@pics/Clipped_image_20240705_114203.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
