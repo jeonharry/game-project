@@ -22,6 +22,8 @@ public abstract class Raider
     private double y;
     private double translateX;
     private double translateY;
+    private ParallelTransition transition;
+    private DefendTower defendTower=null;
     public Raider(int health,int loot,int speed, ArrayList <ArrayList <Double>> road,ImageView raider)
     {
         this.health=health;
@@ -114,6 +116,14 @@ public abstract class Raider
         this.translateY = translateY;
     }
 
+    public ParallelTransition getTransition() {
+        return transition;
+    }
+
+    public void setTransition(ParallelTransition transition) {
+        this.transition = transition;
+    }
+
     public void walk()
     {
         int steps=(int)Math.sqrt(((Math.abs(raider.getLayoutX()-this.road.get(1).getFirst()))*(Math.abs(raider.getLayoutX()-this.road.get(1).getFirst())))+((Math.abs(raider.getLayoutY()-this.road.get(1).getLast()))*(Math.abs(raider.getLayoutY()-this.road.get(1).getLast()))));
@@ -122,8 +132,19 @@ public abstract class Raider
         this.y=raider.getLayoutY();
         walk(steps,1);
     }
-    public void walk(int steps,int counter)
+
+    public DefendTower getDefendTower() {
+        return defendTower;
+    }
+
+    public void setDefendTower(DefendTower defendTower) {
+        this.defendTower = defendTower;
+    }
+
+    public void walk(int steps, int counter)
     {
+        ParallelTransition parallelTransition=new ParallelTransition(this.raider);
+        transition=parallelTransition;
         Timeline timeline=new Timeline();
         int i;
         for(i=0;i<this.imagesForAnimation.size();++i) {
@@ -157,9 +178,34 @@ public abstract class Raider
                             ((WizardTower) temp).setAttacking(this);
                             temp.damage();
                         }
-                        else if(temp instanceof Artillery || temp instanceof DefendTower)
+                        if(temp instanceof DefendTower && !(this instanceof FlierRaider))
                         {
-                            temp.damage();
+                            if(!((DefendTower) temp).isStopping())
+                            {
+                                translateX=raider.getTranslateX();
+                                translateY=raider.getTranslateY();
+                                ((DefendTower) temp).getOnAttackings().add(this);
+                                ((DefendTower) temp).setStopping(true);
+                                defendTower=(DefendTower) temp;
+                                temp.damage();
+                            }
+                            else
+                            {
+                                if(((DefendTower) temp).getOnAttackings().contains(this))
+                                    ((DefendTower) temp).getOnAttackings().remove(this);
+                                else
+                                {
+                                    if(!defendTower.equals(temp))
+                                    {
+                                        ((DefendTower) temp).getOnAttackings().add(this);
+                                        defendTower=(DefendTower) temp;
+                                    }
+                                }
+                            }
+                        }
+                        if(temp instanceof Artillery && !(this instanceof FlierRaider))
+                        {
+                            
                         }
                     }
                     else
@@ -168,6 +214,11 @@ public abstract class Raider
                             ((ArcherTower) temp).setAttacking(null);
                         if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()==this)
                             ((WizardTower) temp).setAttacking(null);
+                        if(temp instanceof DefendTower && ((DefendTower) temp).isStopping() && ((DefendTower) temp).getOnAttackings().contains(this))
+                        {
+                            ((DefendTower) temp).setStopping(false);
+                            ((DefendTower) temp).getOnAttackings().remove(this);
+                        }
                     }
                 }
         }));
@@ -182,8 +233,10 @@ public abstract class Raider
         transitionX.setDuration(Duration.millis(((i+1)*steps)*50));
         transitionX.setNode(this.raider);
         transitionX.setCycleCount(1);
-        ParallelTransition parallelTransition=new ParallelTransition(this.raider,timeline,transitionX,transitionY);
         parallelTransition.setCycleCount(1);
+        parallelTransition.getChildren().add(timeline);
+        parallelTransition.getChildren().add(transitionX);
+        parallelTransition.getChildren().add(transitionY);
         parallelTransition.setOnFinished(event ->{
             int k=counter+1;
             if(health>0 && k<this.road.size())

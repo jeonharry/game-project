@@ -13,14 +13,16 @@ public class Map
     private final ArrayList <Double> endPoint;
     private ArrayList <Tower> towers=new ArrayList<>();
     private ArrayList <Raider> raidersInMap=new ArrayList<>();
+    private final ArrayList <Direction> directions;
     private final int attackWaves;
-    public Map(int coins, ArrayList <Double> towerPlaces, ArrayList <ArrayList<Double>> heroPlaces, ArrayList <Double> endPoint, int attackWaves)
+    public Map(int coins, ArrayList <Double> towerPlaces, ArrayList <ArrayList<Double>> heroPlaces, ArrayList <Double> endPoint,ArrayList <Direction> directions ,int attackWaves)
     {
         this.coins=coins;
         this.towerPlaces = towerPlaces;
         this.heroPlaces = heroPlaces;
         this.endPoint = endPoint;
         this.attackWaves = attackWaves;
+        this.directions=directions;
     }
 
     public int getCoins() {
@@ -57,5 +59,9 @@ public class Map
 
     public void setRaidersInMap(ArrayList<Raider> raidersInMap) {
         this.raidersInMap = raidersInMap;
+    }
+
+    public ArrayList<Direction> getDirections() {
+        return directions;
     }
 }

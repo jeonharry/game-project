@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.example.demo9.model.Database;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.example.demo9.model.Direction;
 import org.example.demo9.model.Map;
 
 import java.util.ArrayList;
@@ -73,7 +74,13 @@ public class Main extends Application {
         road.add(makeSpot(498.0,404.0));
         road.add(makeSpot(611.0,326.0));
         road.add(makeSpot(737.0,334.0));
-        Map firstMap=new Map(250,towerPlaces,road,end,5);
+        ArrayList <Direction> directions=new ArrayList<>();
+        directions.add(Direction.RIGHT);
+        directions.add(Direction.LEFT);
+        directions.add(Direction.LEFT);
+        directions.add(Direction.DOWN);
+        directions.add(Direction.UP);
+        Map firstMap=new Map(250,towerPlaces,road,end,directions,5);
         Database.getDatabase().getMaps().add(firstMap);
     }
     public static ArrayList<Double> makeSpot(double x,double y)
