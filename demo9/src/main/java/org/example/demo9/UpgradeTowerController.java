@@ -47,7 +47,7 @@ public class UpgradeTowerController implements Initializable {
 
     @FXML
     void sell(MouseEvent event) {
-        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(tower.getPrice()/2)));
+        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(tower.getSellPrice()/2)));
         tower.destroy();
         Controller.getController().getMap().getChildren().remove(Controller.getController().getSelectedTowerUpgrade());
     }

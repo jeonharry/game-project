@@ -62,7 +62,24 @@ public class Main extends Application {
         towerPlaces.add(295.0); towerPlaces.add(351.0);
         towerPlaces.add(503.0); towerPlaces.add(364.0);
         towerPlaces.add(617.0); towerPlaces.add(419.0);
-        Map firstMap=new Map(250,towerPlaces,new ArrayList<>(),end,5);
+        ArrayList <ArrayList<Double>> road=new ArrayList<>();
+        road.add(makeSpot(356.0,21.0));
+        road.add(makeSpot(347.0,176.0));
+        road.add(makeSpot(266.0,225.0));
+        road.add(makeSpot(206.0,278.0));
+        road.add(makeSpot(218.0,360.0));
+        road.add(makeSpot(337.0,388.0));
+        road.add(makeSpot(409.0,382.0));
+        road.add(makeSpot(498.0,404.0));
+        road.add(makeSpot(611.0,326.0));
+        road.add(makeSpot(737.0,334.0));
+        Map firstMap=new Map(250,towerPlaces,road,end,5);
         Database.getDatabase().getMaps().add(firstMap);
+    }
+    public static ArrayList<Double> makeSpot(double x,double y)
+    {
+        ArrayList <Double> spot=new ArrayList<>();
+        spot.add(x); spot.add(y);
+        return spot;
     }
 }

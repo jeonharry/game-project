@@ -5,7 +5,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" prefHeight="460.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.MapController">
@@ -45,10 +44,13 @@
             <Image url="@pics/Clipped_image_20240706_122626.png" />
          </image>
       </ImageView>
-      <Circle fill="#ff212100" layoutX="374.0" layoutY="51.0" onMouseClicked="#start" radius="19.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <ImageView fx:id="nextWave" fitHeight="50.0" fitWidth="38.0" layoutX="354.0" layoutY="5.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240707_201009.png" />
+         </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Circle>
+      </ImageView>
    </children>
 </AnchorPane>

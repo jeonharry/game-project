@@ -1,6 +1,6 @@
 package org.example.demo9.model;
 
-import javafx.scene.Node;
+import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.towers.Tower;
 
 import java.util.ArrayList;
@@ -9,11 +9,12 @@ public class Map
 {
     private final int coins;
     private final ArrayList <Double> towerPlaces;
-    private final ArrayList <Node> heroPlaces;
+    private final ArrayList <ArrayList<Double>> heroPlaces;
     private final ArrayList <Double> endPoint;
     private ArrayList <Tower> towers=new ArrayList<>();
+    private ArrayList <Raider> raidersInMap=new ArrayList<>();
     private final int attackWaves;
-    public Map(int coins, ArrayList <Double> towerPlaces, ArrayList <Node> heroPlaces, ArrayList <Double> endPoint, int attackWaves)
+    public Map(int coins, ArrayList <Double> towerPlaces, ArrayList <ArrayList<Double>> heroPlaces, ArrayList <Double> endPoint, int attackWaves)
     {
         this.coins=coins;
         this.towerPlaces = towerPlaces;
@@ -30,7 +31,7 @@ public class Map
         return towerPlaces;
     }
 
-    public ArrayList<Node> getHeroPlaces() {
+    public ArrayList<ArrayList<Double>> getHeroPlaces() {
         return heroPlaces;
     }
 
@@ -48,5 +49,13 @@ public class Map
 
     public void setTowers(ArrayList<Tower> towers) {
         this.towers = towers;
+    }
+
+    public ArrayList<Raider> getRaidersInMap() {
+        return raidersInMap;
+    }
+
+    public void setRaidersInMap(ArrayList<Raider> raidersInMap) {
+        this.raidersInMap = raidersInMap;
     }
 }

@@ -1,7 +1,9 @@
 package org.example.demo9.model.towers;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
 import org.example.demo9.Main;
+import org.example.demo9.MapController;
 import org.example.demo9.TowerController;
 import org.example.demo9.TowerGeneratorController;
 import org.example.demo9.controller.Controller;
@@ -38,6 +41,7 @@ public abstract class Tower
     private ImageView level4;
     private ImageView level5;
     private ImageView arrow;
+    private int sellPrice;
     public Tower(int damage,int price,int upgradePrice,double domain,String towerImage) throws IOException {
         TowerController.setTower(this);
         FXMLLoader loader=new FXMLLoader(Main.class.getResource("Tower.fxml"));
@@ -48,6 +52,7 @@ public abstract class Tower
         this.price=price;
         this.upgradePrice=upgradePrice;
         tower.setCursor(Cursor.HAND);
+        this.sellPrice=price;
     }
 
     public int getDamage() {
@@ -162,25 +167,34 @@ public abstract class Tower
         this.arrow = arrow;
     }
 
-    public void animation()
+    public int getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(int sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public int animation()
     {
         Timeline timeline=new Timeline();
-        int i = 0;
+        int i;
         for(i=0;i<imagesForAnimate.size();++i) {
             int finalI = i;
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150+i*150), event -> {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200+i*200), event -> {
                 if(animate)
                     towerImage.setImage(imagesForAnimate.get(finalI));
                 else
                     towerImage.setImage(imagesForAnimate.getFirst());
             }));
         }
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i*150+150),event -> {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i*200+200),event -> {
             if(animate)
                 towerImage.setImage(imagesForAnimate.getFirst());
         }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setCycleCount(1);
         timeline.play();
+        return (i+1)*200;
     }
     public void destroy()
     {
@@ -217,6 +231,7 @@ public abstract class Tower
     public void upgrade() throws NotEnoughLevel {
         if(PlayerController.getPlayer().getLevel()<=level)
             throw new NotEnoughLevel();
+        sellPrice+=upgradePrice;
         upgradePrice+=50;
         damage+=20;
         domain+=5;
@@ -232,9 +247,79 @@ public abstract class Tower
     }
     public void damage()
     {
-        this.getArrow().setPreserveRatio(true); this.getArrow().setLayoutX(this.getTower().getLayoutX()+40); this.getArrow().setLayoutY(this.getTower().getLayoutY()+10);
-        this.getArrow().setFitHeight(12); this.getArrow().setFitHeight(12);
-        Controller.getController().getMap().getChildren().add(arrow);
-        //transition & damage
+        int duration=this.animation();
+        Timeline timeline=new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event -> {
+            this.getArrow().setPreserveRatio(true); this.getArrow().setLayoutX(this.getTower().getLayoutX()+40); this.getArrow().setLayoutY(this.getTower().getLayoutY()+10);
+            this.getArrow().setFitHeight(12); this.getArrow().setFitHeight(12);
+            Controller.getController().getMap().getChildren().add(arrow);
+        }));
+        if(this instanceof ArcherTower && ((ArcherTower) this).getAttacking()!=null)
+        {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
+                TranslateTransition transitionY=new TranslateTransition();
+                transitionY.setByY(((ArcherTower) this).getAttacking().getY()+(((ArcherTower) this).getAttacking().getRaider().getTranslateY()-((ArcherTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
+                transitionY.setDuration(Duration.millis(100));
+                transitionY.setNode(arrow);
+                transitionY.setCycleCount(1);
+                TranslateTransition transitionX=new TranslateTransition();
+                transitionX.setByX(((ArcherTower) this).getAttacking().getX()+(((ArcherTower) this).getAttacking().getRaider().getTranslateX()-((ArcherTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
+                transitionX.setDuration(Duration.millis(100));
+                transitionX.setNode(arrow);
+                transitionX.setCycleCount(1);
+                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                parallelTransition.setCycleCount(1);
+                parallelTransition.play();
+            }));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
+                Controller.getController().getMap().getChildren().remove(arrow);
+                arrow.setLayoutX(0); arrow.setLayoutY(0);
+                ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-this.getDamage());
+                if(((ArcherTower) this).getAttacking().getHealth()<=0)
+                {
+                    Controller.getController().getMap().getChildren().remove(((ArcherTower) this).getAttacking().getRaider());
+                    Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((ArcherTower) this).getAttacking().getLoot()));
+                    MapController.getMap().getRaidersInMap().remove(((ArcherTower) this).getAttacking());
+                    ((ArcherTower) this).getAttacking().getRaider().setLayoutY(0);
+                    ((ArcherTower) this).getAttacking().getRaider().setLayoutX(0);
+                    ((ArcherTower) this).setAttacking(null);
+                }
+            }));
+        }
+        if(this instanceof WizardTower && ((WizardTower) this).getAttacking()!=null)
+        {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
+                TranslateTransition transitionY=new TranslateTransition();
+                transitionY.setByY(((WizardTower) this).getAttacking().getY()+(((WizardTower) this).getAttacking().getRaider().getTranslateY()-((WizardTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
+                transitionY.setDuration(Duration.millis(100));
+                transitionY.setNode(arrow);
+                transitionY.setCycleCount(1);
+                TranslateTransition transitionX=new TranslateTransition();
+                transitionX.setByX(((WizardTower) this).getAttacking().getX()+(((WizardTower) this).getAttacking().getRaider().getTranslateX()-((WizardTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
+                transitionX.setDuration(Duration.millis(100));
+                transitionX.setNode(arrow);
+                transitionX.setCycleCount(1);
+                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                parallelTransition.setCycleCount(1);
+                parallelTransition.play();
+            }));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
+                Controller.getController().getMap().getChildren().remove(arrow);
+                arrow.setLayoutX(0); arrow.setLayoutY(0);
+                ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-this.getDamage());
+                if(((WizardTower) this).getAttacking().getHealth()<=0)
+                {
+                    Controller.getController().getMap().getChildren().remove(((WizardTower) this).getAttacking().getRaider());
+                    Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((WizardTower) this).getAttacking().getLoot()));
+                    MapController.getMap().getRaidersInMap().remove(((WizardTower) this).getAttacking());
+                    ((WizardTower) this).getAttacking().getRaider().setLayoutY(0);
+                    ((WizardTower) this).getAttacking().getRaider().setLayoutX(0);
+                    ((WizardTower) this).setAttacking(null);
+                }
+            }));
+        }
+        if(this instanceof Artillery)
+            ;
+        timeline.play();
     }
 }

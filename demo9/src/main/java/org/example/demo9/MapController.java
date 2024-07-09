@@ -7,12 +7,14 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.model.Map;
+import org.example.demo9.model.raiders.FastRaider;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,18 +34,18 @@ public class MapController implements Initializable {
 
     @FXML
     private Label waves;
-    private static Map map;
 
+    @FXML
+    private ImageView nextWave;
+    private static Map map;
     private ArrayList <Node> heroPlaces=new ArrayList<>();
 
     @FXML
-    void placeTower(MouseEvent event) {
-
-    }
-
-    @FXML
     void start(MouseEvent event) {
-
+        nextWave.setVisible(false);
+        FastRaider raider=new FastRaider(60,map.getHeroPlaces());
+        map.getRaidersInMap().add(raider);
+        raider.walk();
     }
 
     @Override
