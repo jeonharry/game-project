@@ -205,7 +205,10 @@ public abstract class Raider
                         }
                         if(temp instanceof Artillery && !(this instanceof FlierRaider))
                         {
-                            
+                            translateX=raider.getTranslateX();
+                            translateY=raider.getTranslateY();
+                            ((Artillery) temp).getOnAttackings().add(this);
+                            temp.damage();
                         }
                     }
                     else
@@ -219,6 +222,8 @@ public abstract class Raider
                             ((DefendTower) temp).setStopping(false);
                             ((DefendTower) temp).getOnAttackings().remove(this);
                         }
+                        if(temp instanceof  Artillery)
+                            ((Artillery) temp).getOnAttackings().remove(this);
                     }
                 }
         }));

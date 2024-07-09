@@ -16,7 +16,7 @@ public class DefendTower extends Tower {
         ArrayList<Image> imagesForAnimate=new ArrayList<>();
         imagesForAnimate.add(new Image(Main.class.getResource("pics/def1.png").toExternalForm()));
         this.setImagesForAnimate(imagesForAnimate);
-        this.setArrow(new ImageView());
+        this.setAttackingDevice(new ImageView());
     }
 
     public boolean isStopping() {

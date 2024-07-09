@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -42,7 +41,7 @@ public abstract class Tower
     private ImageView level3;
     private ImageView level4;
     private ImageView level5;
-    private ImageView arrow;
+    private ImageView attackingDevice;
     private int sellPrice;
     public Tower(int damage,int price,int upgradePrice,double domain,String towerImage) throws IOException {
         TowerController.setTower(this);
@@ -161,12 +160,12 @@ public abstract class Tower
         this.imagesForAnimate = imagesForAnimate;
     }
 
-    public ImageView getArrow() {
-        return arrow;
+    public ImageView getAttackingDevice() {
+        return attackingDevice;
     }
 
-    public void setArrow(ImageView arrow) {
-        this.arrow = arrow;
+    public void setAttackingDevice(ImageView attackingDevice) {
+        this.attackingDevice = attackingDevice;
     }
 
     public int getSellPrice() {
@@ -249,12 +248,15 @@ public abstract class Tower
     }
     public void damage()
     {
+        ImageView arrow=new ImageView();
+        arrow.setImage(attackingDevice.getImage());
+        arrow.getTransforms().addAll(attackingDevice.getTransforms());
         int duration=this.animation();
         Timeline timeline=new Timeline();
         if(!(this instanceof DefendTower))
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event -> {
-                this.getArrow().setPreserveRatio(true); this.getArrow().setLayoutX(this.getTower().getLayoutX()+40); this.getArrow().setLayoutY(this.getTower().getLayoutY()+10);
-                this.getArrow().setFitHeight(12); this.getArrow().setFitHeight(12);
+                arrow.setPreserveRatio(true); arrow.setLayoutX(this.getTower().getLayoutX()+40); arrow.setLayoutY(this.getTower().getLayoutY()+10);
+                arrow.setFitHeight(12); arrow.setFitHeight(12);
                 Controller.getController().getMap().getChildren().add(arrow);
             }));
         if(this instanceof ArcherTower && ((ArcherTower) this).getAttacking()!=null)
@@ -325,6 +327,41 @@ public abstract class Tower
         }
         if(this instanceof Artillery)
         {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
+                TranslateTransition transitionY=new TranslateTransition();
+                transitionY.setByY(35);
+                transitionY.setDuration(Duration.millis(200));
+                transitionY.setNode(arrow);
+                transitionY.setCycleCount(1);
+                TranslateTransition transitionX=new TranslateTransition();
+                transitionX.setByX(35);
+                transitionX.setDuration(Duration.millis(200));
+                transitionX.setNode(arrow);
+                transitionX.setCycleCount(1);
+                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                parallelTransition.setCycleCount(1);
+                parallelTransition.play();
+            }));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+200),event ->{
+                Controller.getController().getMap().getChildren().remove(arrow);
+                arrow.setLayoutX(0); arrow.setLayoutY(0);
+                for(Raider raider:((Artillery) this).getOnAttackings())
+                {
+                    if(raider!=null)
+                    {
+                        raider.setHealth(raider.getHealth()-this.getDamage());
+                        if(raider.getHealth()<=0)
+                        {
+                            Controller.getController().getMap().getChildren().remove(raider.getRaider());
+                            Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(raider.getLoot())));
+                            MapController.getMap().getRaidersInMap().remove(raider);
+                            raider.getRaider().setLayoutY(0);
+                            raider.getRaider().setLayoutX(0);
+                            ((Artillery) this).getOnAttackings().remove(raider);
+                        }
+                    }
+                }
+            }));
             timeline.play();
         }
         if(this instanceof DefendTower)
@@ -344,19 +381,19 @@ public abstract class Tower
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),event -> {
                 if(direction.equals(Direction.UP) || direction.equals(Direction.DOWN))
                 {
-                    this.arrow.setImage(new Image(Main.class.getResource("pics/brick-wall-gray-seamless-pattern-background-light-cartoon-vector-5texture-illustration-5horizontal-old-grey-179065880.jpg").toExternalForm()));
-                    this.getArrow().setFitHeight(45); this.getArrow().setFitHeight(45);
-                    this.getArrow().setLayoutX(this.getTower().getLayoutX());
-                    this.getArrow().setLayoutY(((DefendTower) this).getOnAttackings().getFirst().getRaider().getLayoutY()+((DefendTower) this).getOnAttackings().getFirst().getTranslateY());
+                    arrow.setImage(new Image(Main.class.getResource("pics/brick-wall-gray-seamless-pattern-background-light-cartoon-vector-5texture-illustration-5horizontal-old-grey-179065880.jpg").toExternalForm()));
+                    arrow.setFitHeight(45); arrow.setFitHeight(45);
+                    arrow.setLayoutX(this.getTower().getLayoutX());
+                    arrow.setLayoutY(((DefendTower) this).getOnAttackings().getFirst().getRaider().getLayoutY()+((DefendTower) this).getOnAttackings().getFirst().getTranslateY());
                 }
                 else
                 {
-                    this.arrow.setImage(new Image(Main.class.getResource("pics/brick-wall-gray-seamless-pattern-background-light-cartoon-vector-texture-illustration-horizontal-old-grey-179065880.jpg").toExternalForm()));
-                    this.getArrow().setFitHeight(45); this.getArrow().setFitHeight(45);
-                    this.getArrow().setLayoutX(((DefendTower) this).getOnAttackings().getFirst().getRaider().getLayoutX()+((DefendTower) this).getOnAttackings().getFirst().getTranslateX());
-                    this.getArrow().setLayoutY(this.getTower().getLayoutY());
+                    arrow.setImage(new Image(Main.class.getResource("pics/brick-wall-gray-seamless-pattern-background-light-cartoon-vector-texture-illustration-horizontal-old-grey-179065880.jpg").toExternalForm()));
+                    arrow.setFitHeight(45); arrow.setFitHeight(45);
+                    arrow.setLayoutX(((DefendTower) this).getOnAttackings().getFirst().getRaider().getLayoutX()+((DefendTower) this).getOnAttackings().getFirst().getTranslateX());
+                    arrow.setLayoutY(this.getTower().getLayoutY());
                 }
-                this.getArrow().setPreserveRatio(true);
+                arrow.setPreserveRatio(true);
                 Controller.getController().getMap().getChildren().add(arrow);
                 for(Raider raider:((DefendTower) this).getOnAttackings())
                     if(raider!=null)

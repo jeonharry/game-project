@@ -21,10 +21,10 @@ public class ArcherTower extends Tower
         imagesForAnimate.add(new Image(Main.class.getResource("pics/archer3.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/archer4.png").toExternalForm()));
         this.setImagesForAnimate(imagesForAnimate);
-        this.setArrow(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_175041.png").toExternalForm())));
+        this.setAttackingDevice(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_175041.png").toExternalForm())));
         Rotate rotate=new Rotate();
         rotate.setAngle(45);
-        this.getArrow().getTransforms().add(rotate);
+        this.getAttackingDevice().getTransforms().add(rotate);
     }
 
     public Raider getAttacking() {

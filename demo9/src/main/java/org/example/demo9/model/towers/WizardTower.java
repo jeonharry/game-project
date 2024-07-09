@@ -18,7 +18,7 @@ public class WizardTower extends Tower
         imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard1.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard2.png").toExternalForm()));
         this.setImagesForAnimate(imagesForAnimate);
-        this.setArrow(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_172920.png").toExternalForm())));
+        this.setAttackingDevice(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_172920.png").toExternalForm())));
     }
 
     public Raider getAttacking() {

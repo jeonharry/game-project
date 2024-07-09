@@ -3,6 +3,7 @@ package org.example.demo9.model.towers;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.demo9.Main;
+import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.towers.Tower;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 
 public class Artillery extends Tower
 {
+    private ArrayList <Raider> onAttackings=new ArrayList<>();
     public Artillery(double domain) throws IOException {
         super(15, 125,100,domain,"pics/bomb1.png");
         ArrayList<Image> imagesForAnimate=new ArrayList<>();
@@ -20,6 +22,14 @@ public class Artillery extends Tower
         imagesForAnimate.add(new Image(Main.class.getResource("pics/bomb5.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/bomb6.png").toExternalForm()));
         this.setImagesForAnimate(imagesForAnimate);
-        this.setArrow(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_174445.png").toExternalForm())));
+        this.setAttackingDevice(new ImageView(new Image(Main.class.getResource("pics/Clipped_image_20240707_174445.png").toExternalForm())));
+    }
+
+    public ArrayList<Raider> getOnAttackings() {
+        return onAttackings;
+    }
+
+    public void setOnAttackings(ArrayList<Raider> onAttackings) {
+        this.onAttackings = onAttackings;
     }
 }
