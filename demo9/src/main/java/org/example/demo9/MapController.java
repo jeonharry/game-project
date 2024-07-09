@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.model.Map;
-import org.example.demo9.model.raiders.FastRaider;
+import org.example.demo9.model.raiders.FlierRaider;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class MapController implements Initializable {
     @FXML
     void start(MouseEvent event) {
         nextWave.setVisible(false);
-        FastRaider raider=new FastRaider(60,map.getHeroPlaces());
+        FlierRaider raider=new FlierRaider(75,map.getHeroPlaces());
         map.getRaidersInMap().add(raider);
         raider.walk();
     }

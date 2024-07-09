@@ -22,6 +22,7 @@ import org.example.demo9.controller.PlayerController;
 import org.example.demo9.exceptions.NotEnoughLevel;
 import org.example.demo9.model.Direction;
 import org.example.demo9.model.raiders.Raider;
+import org.example.demo9.model.raiders.ShieldRaider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -246,7 +247,7 @@ public abstract class Tower
         if(this.getLevel()>4)
             level5.setVisible(true);
     }
-    public void damage()
+    public void damage(Raider enemy)
     {
         ImageView arrow=new ImageView();
         arrow.setImage(attackingDevice.getImage());
@@ -279,7 +280,10 @@ public abstract class Tower
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
                 arrow.setLayoutX(0); arrow.setLayoutY(0);
-                ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-this.getDamage());
+                if(((ArcherTower) this).getAttacking() instanceof ShieldRaider)
+                    ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-(this.getDamage()/2));
+                else
+                    ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-this.getDamage());
                 if(((ArcherTower) this).getAttacking().getHealth()<=0)
                 {
                     Controller.getController().getMap().getChildren().remove(((ArcherTower) this).getAttacking().getRaider());
@@ -287,6 +291,7 @@ public abstract class Tower
                     MapController.getMap().getRaidersInMap().remove(((ArcherTower) this).getAttacking());
                     ((ArcherTower) this).getAttacking().getRaider().setLayoutY(0);
                     ((ArcherTower) this).getAttacking().getRaider().setLayoutX(0);
+                    die(((ArcherTower) this).getAttacking());
                     ((ArcherTower) this).setAttacking(null);
                 }
             }));
@@ -312,7 +317,13 @@ public abstract class Tower
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
                 arrow.setLayoutX(0); arrow.setLayoutY(0);
-                ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-this.getDamage());
+                if(((WizardTower) this).getAttacking() instanceof ShieldRaider && ((ShieldRaider) ((WizardTower) this).getAttacking()).isHaveShield())
+                {
+                    ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-(((WizardTower) this).getAttacking().getHealth()/2));
+                    ((ShieldRaider) ((WizardTower) this).getAttacking()).setHaveShield(false);
+                }
+                else
+                    ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-this.getDamage());
                 if(((WizardTower) this).getAttacking().getHealth()<=0)
                 {
                     Controller.getController().getMap().getChildren().remove(((WizardTower) this).getAttacking().getRaider());
@@ -320,6 +331,7 @@ public abstract class Tower
                     MapController.getMap().getRaidersInMap().remove(((WizardTower) this).getAttacking());
                     ((WizardTower) this).getAttacking().getRaider().setLayoutY(0);
                     ((WizardTower) this).getAttacking().getRaider().setLayoutX(0);
+                    die(((WizardTower) this).getAttacking());
                     ((WizardTower) this).setAttacking(null);
                 }
             }));
@@ -345,24 +357,22 @@ public abstract class Tower
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+200),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
                 arrow.setLayoutX(0); arrow.setLayoutY(0);
-                for(Raider raider:((Artillery) this).getOnAttackings())
+                if(enemy!=null)
                 {
-                    if(raider!=null)
+                    enemy.setHealth(enemy.getHealth()-this.getDamage());
+                    if(enemy.getHealth()<=0)
                     {
-                        raider.setHealth(raider.getHealth()-this.getDamage());
-                        if(raider.getHealth()<=0)
-                        {
-                            Controller.getController().getMap().getChildren().remove(raider.getRaider());
-                            Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(raider.getLoot())));
-                            MapController.getMap().getRaidersInMap().remove(raider);
-                            raider.getRaider().setLayoutY(0);
-                            raider.getRaider().setLayoutX(0);
-                            ((Artillery) this).getOnAttackings().remove(raider);
-                        }
+                        Controller.getController().getMap().getChildren().remove(enemy.getRaider());
+                        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(enemy.getLoot())));
+                        MapController.getMap().getRaidersInMap().remove(enemy);
+                        enemy.getRaider().setLayoutY(0);
+                        enemy.getRaider().setLayoutX(0);
+                        die(enemy);
+                        ((Artillery) this).getOnAttackings().remove(enemy);
                     }
                 }
             }));
-            timeline.play();
+            this.animation();
         }
         if(this instanceof DefendTower)
         {
@@ -413,5 +423,22 @@ public abstract class Tower
             }));
             timeline.play();
         }
+    }
+    public void die(Raider raider)
+    {
+        for(Tower temp:MapController.getMap().getTowers())
+            if(temp!=null)
+            {
+                if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()!=null)
+                    if(((ArcherTower) temp).getAttacking().equals(raider))
+                        ((ArcherTower) temp).setAttacking(null);
+                if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
+                    if(((WizardTower) temp).getAttacking().equals(raider))
+                        ((WizardTower) temp).setAttacking(null);
+                if(temp instanceof Artillery)
+                    ((Artillery) temp).getOnAttackings().remove(raider);
+                if(temp instanceof DefendTower)
+                    ((DefendTower) temp).getOnAttackings().remove(raider);
+            }
     }
 }
