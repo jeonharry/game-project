@@ -1,13 +1,17 @@
 package org.example.demo9.model.raiders;
 
 import javafx.animation.*;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import org.example.demo9.LosePageController;
+import org.example.demo9.Main;
 import org.example.demo9.MapController;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.model.towers.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Raider
@@ -366,10 +370,46 @@ public abstract class Raider
                 }
                 raider.setLayoutY(0); raider.setLayoutX(0);
                 if(Integer.parseInt(Controller.getController().getHearts().getText())<=0)
-                    ;
-                //lose page
+                {
+                    end();
+                    LosePageController.setMap(MapController.getMap());
+                    FXMLLoader loader=new FXMLLoader(Main.class.getResource("LosePage.fxml"));
+                    try {
+                        Controller.getController().getMap().getChildren().add(loader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else if(Controller.getController().getWaves().getText().compareTo(MapController.getMap().getAttackWaves()+"/"+MapController.getMap().getAttackWaves())==0 && MapController.getMap().getRaidersInMap().isEmpty())
+                    MapController.win();
             }
         });
         parallelTransition.play();
+    }
+    private void end()
+    {
+        for(Raider raider: MapController.getMap().getRaidersInMap())
+            if(raider!=null)
+            {
+                raider.getTransition().stop();
+                Controller.getController().getMap().getChildren().remove(raider.getRaider());
+                raider.getRaider().setLayoutY(0);
+                raider.getRaider().setLayoutX(0);
+                for(Tower temp:MapController.getMap().getTowers())
+                    if(temp!=null)
+                    {
+                        if (temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking() != null)
+                            if (((ArcherTower) temp).getAttacking().equals(raider))
+                                ((ArcherTower) temp).setAttacking(null);
+                        if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
+                            if(((WizardTower) temp).getAttacking().equals(raider))
+                                ((WizardTower) temp).setAttacking(null);
+                        if(temp instanceof Artillery)
+                            ((Artillery) temp).getOnAttackings().remove(raider);
+                        if(temp instanceof DefendTower)
+                            ((DefendTower) temp).getOnAttackings().remove(raider);
+                    }
+            }
+        MapController.getMap().getRaidersInMap().removeAll(MapController.getMap().getRaidersInMap());
     }
 }

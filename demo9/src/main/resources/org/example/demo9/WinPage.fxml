@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="460.0" prefWidth="840.0" style="-fx-background-color: #00000080;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.WinPageController">
+   <children>
+      <ImageView fitHeight="410.0" fitWidth="567.0" layoutX="194.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240710_175722.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="collectedGems" alignment="CENTER" layoutX="590.0" layoutY="203.0" prefHeight="38.0" prefWidth="54.0" rotate="12.0" style="-fx-background-color: #563e24; -fx-background-radius: 10;" text="0" textFill="#74f1ff">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="59.0" layoutX="272.0" layoutY="301.0" onMouseClicked="#exit" stroke="TRANSPARENT" strokeType="INSIDE" width="218.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="37.0" layoutX="294.0" layoutY="377.0" onMouseClicked="#replay" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+   </children>
+</AnchorPane>

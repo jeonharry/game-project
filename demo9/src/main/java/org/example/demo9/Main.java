@@ -84,7 +84,7 @@ public class Main extends Application {
         directions.add(Direction.DOWN);
         directions.add(Direction.UP);
         Image image=new Image(Main.class.getResource("pics/Screenshot_20240706_122243_Kingdom Rush.jpg").toExternalForm());
-        Map firstMap=new Map(250,towerPlaces,roads,end,directions,image,5);
+        Map firstMap=new Map(250,towerPlaces,roads,end,directions,image,2);
         Database.getDatabase().getMaps().add(firstMap);
     }
     public static ArrayList<Double> makeSpot(double x,double y)

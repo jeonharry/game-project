@@ -27,6 +27,8 @@ public class BoySpell implements Spell {
                 die(raider);
             }
         MapController.getMap().getRaidersInMap().removeAll(MapController.getMap().getRaidersInMap());
+        if(Controller.getController().getWaves().getText().compareTo(MapController.getMap().getAttackWaves()+"/"+MapController.getMap().getAttackWaves())==0)
+            MapController.win();
     }
 
     public static String getInfo() {

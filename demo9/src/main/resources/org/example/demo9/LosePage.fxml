@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="460.0" prefWidth="840.0" style="-fx-background-color: #00000080;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.LosePageController">
+   <children>
+      <ImageView fitHeight="410.0" fitWidth="567.0" layoutX="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240710_164727.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="64.0" layoutX="557.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_202410_164727.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="collectedGems" alignment="CENTER" layoutX="194.0" layoutY="154.0" prefHeight="30.0" prefWidth="37.0" style="-fx-background-color: #483520; -fx-background-radius: 5;" text="0" textFill="#74f1ff">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="59.0" layoutX="435.0" layoutY="223.0" onMouseClicked="#shop" stroke="TRANSPARENT" strokeType="INSIDE" width="194.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="59.0" layoutX="213.0" layoutY="315.0" onMouseClicked="#replay" stroke="TRANSPARENT" strokeType="INSIDE" width="194.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="59.0" layoutX="435.0" layoutY="315.0" onMouseClicked="#exit" stroke="TRANSPARENT" strokeType="INSIDE" width="194.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+   </children>
+</AnchorPane>

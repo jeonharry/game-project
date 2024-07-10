@@ -163,4 +163,8 @@ public class PlayerController
         }
         throw new NoSpell();
     }
+    public void updateGems(long gems) throws SQLException {
+        player.setGems(player.getGems()+gems);
+        Database.getDatabase().updatePlayerInfoGema(player.getGems(),player.getID());
+    }
 }

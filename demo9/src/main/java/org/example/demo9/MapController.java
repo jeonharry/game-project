@@ -69,6 +69,7 @@ public class MapController implements Initializable {
     private static int mapNum;
     private long time;
     private boolean use=false;
+    private static boolean lose=false;
 
     @FXML
     void pickBoy(MouseEvent event) throws Exception {
@@ -160,7 +161,8 @@ public class MapController implements Initializable {
         endWave.getKeyFrames().add(new KeyFrame(Duration.millis(500),e ->{
             if(map.getRaidersInMap().isEmpty())
             {
-                timeline.play();
+                if(!lose)
+                    timeline.play();
             }
         }));
         for(int i=1;i<=map.getAttackWaves();++i) {
@@ -168,13 +170,12 @@ public class MapController implements Initializable {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis((i-1)*3000), e ->{
                 makeWaves(finalI);
                 waves.setText(finalI+"/"+String.valueOf(map.getAttackWaves()));
-                timeline.pause();
                 if(waves.getText().compareTo(map.getAttackWaves()+"/"+map.getAttackWaves())==0)
                 {
-                //load win page
-                    timeline.stop();
                     endWave.stop();
+                    timeline.stop();
                 }
+                timeline.pause();
             }));
         }
         timeline.play();
@@ -313,6 +314,20 @@ public class MapController implements Initializable {
         coinAmount.setText(String.valueOf(PlayerController.getPlayerController().getCoinSpellAmount()));
         healAmount.setText(String.valueOf(PlayerController.getPlayerController().getHealSpellAmount()));
     }
+    public static void win()
+    {
+        WinPageController.setMap(map);
+        WinPageController.setGems(300L *(mapNum-1));
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("WinPage.fxml"));
+        try {
+            Controller.getController().getMap().getChildren().add(loader.load());
+        } catch (IOException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+        }
+    }
     public static int getMapNum() {
         return mapNum;
     }
@@ -327,5 +342,13 @@ public class MapController implements Initializable {
 
     public static void setImage(Image image) {
         MapController.image = image;
+    }
+
+    public static boolean isLose() {
+        return lose;
+    }
+
+    public static void setLose(boolean lose) {
+        MapController.lose = lose;
     }
 }

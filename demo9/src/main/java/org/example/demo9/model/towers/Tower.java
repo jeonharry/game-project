@@ -13,10 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
-import org.example.demo9.Main;
-import org.example.demo9.MapController;
-import org.example.demo9.TowerController;
-import org.example.demo9.TowerGeneratorController;
+import org.example.demo9.*;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
 import org.example.demo9.exceptions.NotEnoughLevel;
@@ -456,7 +453,10 @@ public abstract class Tower
                         ((Artillery) temp).getOnAttackings().remove(raider);
                     if(temp instanceof DefendTower)
                         ((DefendTower) temp).getOnAttackings().remove(raider);
+                    LosePageController.setGems(LosePageController.getGems()+1);
                 }
             }
+        if(Controller.getController().getWaves().getText().compareTo(MapController.getMap().getAttackWaves()+"/"+MapController.getMap().getAttackWaves())==0 && MapController.getMap().getRaidersInMap().isEmpty())
+            MapController.win();
     }
 }
