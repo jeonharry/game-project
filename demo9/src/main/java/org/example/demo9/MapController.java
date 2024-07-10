@@ -1,5 +1,8 @@
 package org.example.demo9;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,13 +15,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.util.Duration;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.model.Map;
-import org.example.demo9.model.raiders.FlierRaider;
+import org.example.demo9.model.raiders.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
@@ -38,14 +43,36 @@ public class MapController implements Initializable {
     @FXML
     private ImageView nextWave;
     private static Map map;
-    private ArrayList <Node> heroPlaces=new ArrayList<>();
+    private static int mapNum;
 
     @FXML
     void start(MouseEvent event) {
         nextWave.setVisible(false);
-        FlierRaider raider=new FlierRaider(75,map.getHeroPlaces());
-        map.getRaidersInMap().add(raider);
-        raider.walk();
+        Timeline timeline=new Timeline();
+        Timeline endWave=new Timeline();
+        endWave.getKeyFrames().add(new KeyFrame(Duration.millis(500),e ->{
+            if(map.getRaidersInMap().isEmpty())
+            {
+                timeline.play();
+            }
+        }));
+        for(int i=1;i<=map.getAttackWaves();++i) {
+            int finalI = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis((i-1)*3000), e ->{
+                makeWaves(finalI);
+                waves.setText(finalI+"/"+String.valueOf(map.getAttackWaves()));
+                timeline.pause();
+                if(waves.getText().compareTo(map.getAttackWaves()+"/"+map.getAttackWaves())==0)
+                {
+                //load win page
+                    timeline.stop();
+                    endWave.stop();
+                }
+            }));
+        }
+        timeline.play();
+        endWave.setCycleCount(Animation.INDEFINITE);
+        endWave.play();
     }
 
     @Override
@@ -97,5 +124,82 @@ public class MapController implements Initializable {
 
     public static void setMap(Map map) {
         MapController.map = map;
+    }
+    private void makeWaves(int waveNum)
+    {
+        ArrayList<ArrayList <ArrayList <ArrayList<Double>>>> manyRoads=new ArrayList<>();
+        for(int j=0;j<map.getHeroPlaces().size();++j)
+            manyRoads.add(makeRoads(j));
+        int counter=0;
+        for(int i=0;i<waveNum+(mapNum-1) && i<5;++i)
+        {
+            Random random=new Random();
+            Raider raider;
+            if(map.getHeroPlaces().size()<=1)
+            {
+                ArrayList <ArrayList <ArrayList<Double>>> roads=manyRoads.getFirst();
+                if(counter>=roads.size())
+                    counter=0;
+                if(random.nextInt(4+(mapNum-1))==0)
+                raider=new FlierRaider(45+((mapNum-1)*10),75+((mapNum-1)*30),roads.get(counter));
+                else if(random.nextInt(4+(mapNum-1))==1)
+                    raider=new FastRaider(40+((mapNum-1)*10),60+((mapNum-1)*30),roads.get(counter));
+                else if(random.nextInt(4+(mapNum-1))==2)
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),70+((mapNum-1)*30),roads.get(counter));
+                else
+                    raider=new ShieldRaider(70+((mapNum-1)*10),80+((mapNum-1)*30),roads.get(counter));
+                if(counter<roads.size())
+                    counter++;
+            }
+            else
+            {
+                ArrayList <ArrayList <ArrayList<Double>>> roads=manyRoads.get(random.nextInt(manyRoads.size()));
+                if(counter>=roads.size())
+                    counter=0;
+                if(random.nextInt(4+(mapNum-1))==0)
+                    raider=new FlierRaider(45+((mapNum-1)*10),75+((mapNum-1)*30),roads.get(counter));
+                else if(random.nextInt(4+(mapNum-1))==1)
+                    raider=new FastRaider(40+((mapNum-1)*10),60+((mapNum-1)*30),roads.get(counter));
+                else if(random.nextInt(4+(mapNum-1))==2)
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),70+((mapNum-1)*30),roads.get(counter));
+                else
+                    raider=new ShieldRaider(70+((mapNum-1)*10),80+((mapNum-1)*30),roads.get(counter));
+                if(counter<roads.size())
+                    counter++;
+            }
+            map.getRaidersInMap().add(raider);
+            raider.walk();
+        }
+    }
+    public ArrayList <ArrayList <ArrayList<Double>>> makeRoads(int roadNum)
+    {
+        ArrayList <ArrayList <ArrayList<Double>>> roads=new ArrayList<>();
+        roads.add(map.getHeroPlaces().get(roadNum));
+        ArrayList <ArrayList<Double>> road1=new ArrayList<>();
+        for(int i=0;i<map.getHeroPlaces().get(roadNum).size();++i)
+        {
+            ArrayList <Double> point=new ArrayList<>();
+            point.add(map.getHeroPlaces().get(roadNum).get(i).getFirst()+5);
+            point.add(map.getHeroPlaces().get(roadNum).get(i).getLast()+5);
+            road1.add(point);
+        }
+        roads.add(road1);
+        ArrayList <ArrayList<Double>> road2=new ArrayList<>();
+        for(int i=0;i<map.getHeroPlaces().get(roadNum).size();++i)
+        {
+            ArrayList <Double> point=new ArrayList<>();
+            point.add(map.getHeroPlaces().get(roadNum).get(i).getFirst()-5);
+            point.add(map.getHeroPlaces().get(roadNum).get(i).getLast()-5);
+            road2.add(point);
+        }
+        roads.add(road2);
+        return roads;
+    }
+    public static int getMapNum() {
+        return mapNum;
+    }
+
+    public static void setMapNum(int mapNum) {
+        MapController.mapNum = mapNum;
     }
 }

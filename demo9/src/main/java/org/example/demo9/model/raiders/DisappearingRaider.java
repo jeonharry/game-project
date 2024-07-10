@@ -7,8 +7,9 @@ import org.example.demo9.Main;
 import java.util.ArrayList;
 
 public class DisappearingRaider extends Raider {
-    public DisappearingRaider(int loot, ArrayList<ArrayList<Double>> road) {
-        super(35, loot, 40,2500, road,new ImageView(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_000.png").toExternalForm())));
+    private boolean disapear=true;
+    public DisappearingRaider(int health,int loot, ArrayList<ArrayList<Double>> road) {
+        super( health,loot, 40,2500, road,new ImageView(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_000.png").toExternalForm())));
         ArrayList <Image> images=new ArrayList<>();
         images.add(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_000.png").toExternalForm()));
         images.add(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_001.png").toExternalForm()));
@@ -31,5 +32,13 @@ public class DisappearingRaider extends Raider {
         images.add(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_018.png").toExternalForm()));
         images.add(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_019.png").toExternalForm()));
         this.setImagesForAnimation(images);
+    }
+
+    public boolean isDisapear() {
+        return disapear;
+    }
+
+    public void setDisapear(boolean disapear) {
+        this.disapear = disapear;
     }
 }

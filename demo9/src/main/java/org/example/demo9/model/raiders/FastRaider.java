@@ -8,8 +8,8 @@ import org.example.demo9.Main;
 import java.util.ArrayList;
 
 public class FastRaider extends Raider {
-    public FastRaider(int loot, ArrayList<ArrayList<Double>> road) {
-        super(40, loot, 30, 2700,road,new ImageView(new Image(Main.class.getResource("pics/fast/1_enemies_1_walk_000.png").toExternalForm())));
+    public FastRaider(int health,int loot, ArrayList<ArrayList<Double>> road) {
+        super(health, loot, 30, 2700,road,new ImageView(new Image(Main.class.getResource("pics/fast/1_enemies_1_walk_000.png").toExternalForm())));
         ArrayList <Image> images=new ArrayList<>();
         images.add(new Image(Main.class.getResource("pics/fast/1_enemies_1_walk_000.png").toExternalForm()));
         images.add(new Image(Main.class.getResource("pics/fast/1_enemies_1_walk_001.png").toExternalForm()));

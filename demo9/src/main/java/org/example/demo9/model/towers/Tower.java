@@ -263,36 +263,43 @@ public abstract class Tower
         if(this instanceof ArcherTower && ((ArcherTower) this).getAttacking()!=null)
         {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
-                TranslateTransition transitionY=new TranslateTransition();
-                transitionY.setByY(((ArcherTower) this).getAttacking().getY()+(((ArcherTower) this).getAttacking().getRaider().getTranslateY()-((ArcherTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
-                transitionY.setDuration(Duration.millis(100));
-                transitionY.setNode(arrow);
-                transitionY.setCycleCount(1);
-                TranslateTransition transitionX=new TranslateTransition();
-                transitionX.setByX(((ArcherTower) this).getAttacking().getX()+(((ArcherTower) this).getAttacking().getRaider().getTranslateX()-((ArcherTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
-                transitionX.setDuration(Duration.millis(100));
-                transitionX.setNode(arrow);
-                transitionX.setCycleCount(1);
-                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
-                parallelTransition.setCycleCount(1);
-                parallelTransition.play();
+                if(((ArcherTower) this).getAttacking()!=null)
+                {
+                    TranslateTransition transitionY=new TranslateTransition();
+                    transitionY.setByY(((ArcherTower) this).getAttacking().getY()+(((ArcherTower) this).getAttacking().getRaider().getTranslateY()-((ArcherTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
+                    transitionY.setDuration(Duration.millis(100));
+                    transitionY.setNode(arrow);
+                    transitionY.setCycleCount(1);
+                    TranslateTransition transitionX=new TranslateTransition();
+                    transitionX.setByX(((ArcherTower) this).getAttacking().getX()+(((ArcherTower) this).getAttacking().getRaider().getTranslateX()-((ArcherTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
+                    transitionX.setDuration(Duration.millis(100));
+                    transitionX.setNode(arrow);
+                    transitionX.setCycleCount(1);
+                    ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                    parallelTransition.setCycleCount(1);
+                    parallelTransition.play();
+                }
             }));
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
                 arrow.setLayoutX(0); arrow.setLayoutY(0);
                 if(((ArcherTower) this).getAttacking() instanceof ShieldRaider)
                     ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-(this.getDamage()/2));
-                else
+                else if(((ArcherTower) this).getAttacking()!=null)
                     ((ArcherTower) this).getAttacking().setHealth(((ArcherTower) this).getAttacking().getHealth()-this.getDamage());
-                if(((ArcherTower) this).getAttacking().getHealth()<=0)
+                if(((ArcherTower) this).getAttacking()!=null)
                 {
-                    Controller.getController().getMap().getChildren().remove(((ArcherTower) this).getAttacking().getRaider());
-                    Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((ArcherTower) this).getAttacking().getLoot()));
-                    MapController.getMap().getRaidersInMap().remove(((ArcherTower) this).getAttacking());
-                    ((ArcherTower) this).getAttacking().getRaider().setLayoutY(0);
-                    ((ArcherTower) this).getAttacking().getRaider().setLayoutX(0);
-                    die(((ArcherTower) this).getAttacking());
-                    ((ArcherTower) this).setAttacking(null);
+                    if(((ArcherTower) this).getAttacking().getHealth()<=0)
+                    {
+                        Controller.getController().getMap().getChildren().remove(((ArcherTower) this).getAttacking().getRaider());
+                        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((ArcherTower) this).getAttacking().getLoot()));
+                        MapController.getMap().getRaidersInMap().remove(((ArcherTower) this).getAttacking());
+                        ((ArcherTower) this).getAttacking().getRaider().setLayoutY(0);
+                        ((ArcherTower) this).getAttacking().getRaider().setLayoutX(0);
+                        ((ArcherTower) this).getAttacking().getTransition().stop();
+                        die(((ArcherTower) this).getAttacking());
+                        ((ArcherTower) this).setAttacking(null);
+                    }
                 }
             }));
             timeline.play();
@@ -300,19 +307,22 @@ public abstract class Tower
         if(this instanceof WizardTower && ((WizardTower) this).getAttacking()!=null)
         {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
-                TranslateTransition transitionY=new TranslateTransition();
-                transitionY.setByY(((WizardTower) this).getAttacking().getY()+(((WizardTower) this).getAttacking().getRaider().getTranslateY()-((WizardTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
-                transitionY.setDuration(Duration.millis(100));
-                transitionY.setNode(arrow);
-                transitionY.setCycleCount(1);
-                TranslateTransition transitionX=new TranslateTransition();
-                transitionX.setByX(((WizardTower) this).getAttacking().getX()+(((WizardTower) this).getAttacking().getRaider().getTranslateX()-((WizardTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
-                transitionX.setDuration(Duration.millis(100));
-                transitionX.setNode(arrow);
-                transitionX.setCycleCount(1);
-                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
-                parallelTransition.setCycleCount(1);
-                parallelTransition.play();
+                if(((WizardTower) this).getAttacking()!=null)
+                {
+                    TranslateTransition transitionY=new TranslateTransition();
+                    transitionY.setByY(((WizardTower) this).getAttacking().getY()+(((WizardTower) this).getAttacking().getRaider().getTranslateY()-((WizardTower) this).getAttacking().getTranslateY())-arrow.getLayoutY());
+                    transitionY.setDuration(Duration.millis(100));
+                    transitionY.setNode(arrow);
+                    transitionY.setCycleCount(1);
+                    TranslateTransition transitionX=new TranslateTransition();
+                    transitionX.setByX(((WizardTower) this).getAttacking().getX()+(((WizardTower) this).getAttacking().getRaider().getTranslateX()-((WizardTower) this).getAttacking().getTranslateX())-arrow.getLayoutX());
+                    transitionX.setDuration(Duration.millis(100));
+                    transitionX.setNode(arrow);
+                    transitionX.setCycleCount(1);
+                    ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                    parallelTransition.setCycleCount(1);
+                    parallelTransition.play();
+                }
             }));
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+100),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
@@ -322,17 +332,21 @@ public abstract class Tower
                     ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-(((WizardTower) this).getAttacking().getHealth()/2));
                     ((ShieldRaider) ((WizardTower) this).getAttacking()).setHaveShield(false);
                 }
-                else
+                else if (((WizardTower) this).getAttacking()!=null)
                     ((WizardTower) this).getAttacking().setHealth(((WizardTower) this).getAttacking().getHealth()-this.getDamage());
-                if(((WizardTower) this).getAttacking().getHealth()<=0)
+                if(((WizardTower) this).getAttacking()!=null)
                 {
-                    Controller.getController().getMap().getChildren().remove(((WizardTower) this).getAttacking().getRaider());
-                    Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((WizardTower) this).getAttacking().getLoot()));
-                    MapController.getMap().getRaidersInMap().remove(((WizardTower) this).getAttacking());
-                    ((WizardTower) this).getAttacking().getRaider().setLayoutY(0);
-                    ((WizardTower) this).getAttacking().getRaider().setLayoutX(0);
-                    die(((WizardTower) this).getAttacking());
-                    ((WizardTower) this).setAttacking(null);
+                    if(((WizardTower) this).getAttacking().getHealth()<=0)
+                    {
+                        Controller.getController().getMap().getChildren().remove(((WizardTower) this).getAttacking().getRaider());
+                        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+((WizardTower) this).getAttacking().getLoot()));
+                        MapController.getMap().getRaidersInMap().remove(((WizardTower) this).getAttacking());
+                        ((WizardTower) this).getAttacking().getRaider().setLayoutY(0);
+                        ((WizardTower) this).getAttacking().getRaider().setLayoutX(0);
+                        ((WizardTower) this).getAttacking().getTransition().stop();
+                        die(((WizardTower) this).getAttacking());
+                        ((WizardTower) this).setAttacking(null);
+                    }
                 }
             }));
             timeline.play();
@@ -367,6 +381,7 @@ public abstract class Tower
                         MapController.getMap().getRaidersInMap().remove(enemy);
                         enemy.getRaider().setLayoutY(0);
                         enemy.getRaider().setLayoutX(0);
+                        enemy.getTransition().stop();
                         die(enemy);
                         ((Artillery) this).getOnAttackings().remove(enemy);
                     }
@@ -429,16 +444,19 @@ public abstract class Tower
         for(Tower temp:MapController.getMap().getTowers())
             if(temp!=null)
             {
-                if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()!=null)
-                    if(((ArcherTower) temp).getAttacking().equals(raider))
-                        ((ArcherTower) temp).setAttacking(null);
-                if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
-                    if(((WizardTower) temp).getAttacking().equals(raider))
-                        ((WizardTower) temp).setAttacking(null);
-                if(temp instanceof Artillery)
-                    ((Artillery) temp).getOnAttackings().remove(raider);
-                if(temp instanceof DefendTower)
-                    ((DefendTower) temp).getOnAttackings().remove(raider);
+                if(raider!=null)
+                {
+                    if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()!=null)
+                        if(((ArcherTower) temp).getAttacking().equals(raider))
+                            ((ArcherTower) temp).setAttacking(null);
+                    if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
+                        if(((WizardTower) temp).getAttacking().equals(raider))
+                            ((WizardTower) temp).setAttacking(null);
+                    if(temp instanceof Artillery)
+                        ((Artillery) temp).getOnAttackings().remove(raider);
+                    if(temp instanceof DefendTower)
+                        ((DefendTower) temp).getOnAttackings().remove(raider);
+                }
             }
     }
 }

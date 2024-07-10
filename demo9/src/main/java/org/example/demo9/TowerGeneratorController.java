@@ -66,7 +66,7 @@ public class TowerGeneratorController implements Initializable {
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.ARCHER.getPrice()));
             try{
-                ArcherTower archerTower=new ArcherTower(70);
+                ArcherTower archerTower=new ArcherTower(80+(MapController.getMapNum())*10);
                 map.getTowers().add(archerTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 archerTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
@@ -116,7 +116,7 @@ public class TowerGeneratorController implements Initializable {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.BOMB.getPrice()));
             try
             {
-                Artillery artillery=new Artillery(60);
+                Artillery artillery=new Artillery(60+(MapController.getMapNum())*10);
                 map.getTowers().add(artillery);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 artillery.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
@@ -166,7 +166,7 @@ public class TowerGeneratorController implements Initializable {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.DEF.getPrice()));
             try
             {
-                DefendTower defendTower=new DefendTower(85);
+                DefendTower defendTower=new DefendTower(85+(MapController.getMapNum())*10);
                 map.getTowers().add(defendTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 defendTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
@@ -217,7 +217,7 @@ public class TowerGeneratorController implements Initializable {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.WIZARD.getPrice()));
             try
             {
-                WizardTower wizardTower=new WizardTower(70);
+                WizardTower wizardTower=new WizardTower(70+(MapController.getMapNum())*10);
                 map.getTowers().add(wizardTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 wizardTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);

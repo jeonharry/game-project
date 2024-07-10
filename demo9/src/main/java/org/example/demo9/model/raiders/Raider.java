@@ -166,80 +166,167 @@ public abstract class Raider
         final long[] time = {System.currentTimeMillis()};
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i*this.speed+this.speed),event -> {
             raider.setImage(imagesForAnimation.getFirst());
+            if(this instanceof DisappearingRaider && ((DisappearingRaider) this).isDisapear())
+                raider.setVisible(false);
             if(System.currentTimeMillis()- time[0] >this.wait)
             {
-                time[0] =System.currentTimeMillis();
-                for(Tower temp: MapController.getMap().getTowers())
-                    if(temp!=null)
+                if(this instanceof DisappearingRaider)
+                {
+                    if(((DisappearingRaider) this).isDisapear() && System.currentTimeMillis()- time[0] >8000)
                     {
-                        double startX=temp.getTower().getLayoutX()-temp.getDomain();
-                        double startY=temp.getTower().getLayoutY()-temp.getDomain();
-                        double endX=temp.getTower().getLayoutX()+temp.getDomain();
-                        double endY=temp.getTower().getLayoutY()+temp.getDomain();
-                        if(raider.getLayoutX()+raider.getTranslateX()>=startX && raider.getLayoutX()+raider.getTranslateX()<=endX && raider.getLayoutY()+raider.getTranslateY()>=startY && raider.getLayoutY()+raider.getTranslateY()<=endY)
-                        {
-                            if(temp instanceof ArcherTower && (((ArcherTower) temp).getAttacking()==null || ((ArcherTower) temp).getAttacking().equals(this)))
+                        raider.setVisible(true);
+                        ((DisappearingRaider) this).setDisapear(false);
+                    }
+                    else if(!((DisappearingRaider) this).isDisapear())
+                    {
+                        for(Tower temp: MapController.getMap().getTowers())
+                            if(temp!=null)
                             {
-                                translateX=raider.getTranslateX();
-                                translateY=raider.getTranslateY();
-                                ((ArcherTower) temp).setAttacking(this);
-                                temp.damage(this);
-                            }
-                            if(temp instanceof WizardTower && (((WizardTower) temp).getAttacking()==null || ((WizardTower) temp).getAttacking().equals(this)))
-                            {
-                                translateX=raider.getTranslateX();
-                                translateY=raider.getTranslateY();
-                                ((WizardTower) temp).setAttacking(this);
-                                temp.damage(this);
-                            }
-                            if(temp instanceof DefendTower && !(this instanceof FlierRaider) && !((DefendTower) temp).getOnAttackings().contains(this))
-                            {
-                                if(!((DefendTower) temp).isStopping())
+                                double startX=temp.getTower().getLayoutX()-temp.getDomain();
+                                double startY=temp.getTower().getLayoutY()-temp.getDomain();
+                                double endX=temp.getTower().getLayoutX()+temp.getDomain();
+                                double endY=temp.getTower().getLayoutY()+temp.getDomain();
+                                if(raider.getLayoutX()+raider.getTranslateX()>=startX && raider.getLayoutX()+raider.getTranslateX()<=endX && raider.getLayoutY()+raider.getTranslateY()>=startY && raider.getLayoutY()+raider.getTranslateY()<=endY)
                                 {
-                                    translateX=raider.getTranslateX();
-                                    translateY=raider.getTranslateY();
-                                    ((DefendTower) temp).getOnAttackings().add(this);
-                                    ((DefendTower) temp).setStopping(true);
-                                    defendTower=(DefendTower) temp;
-                                    temp.damage(this);
+                                    if(temp instanceof ArcherTower && (((ArcherTower) temp).getAttacking()==null || ((ArcherTower) temp).getAttacking().equals(this)))
+                                    {
+                                        translateX=raider.getTranslateX();
+                                        translateY=raider.getTranslateY();
+                                        ((ArcherTower) temp).setAttacking(this);
+                                        temp.damage(this);
+                                    }
+                                    if(temp instanceof WizardTower && (((WizardTower) temp).getAttacking()==null || ((WizardTower) temp).getAttacking().equals(this)))
+                                    {
+                                        translateX=raider.getTranslateX();
+                                        translateY=raider.getTranslateY();
+                                        ((WizardTower) temp).setAttacking(this);
+                                        temp.damage(this);
+                                    }
+                                    if(temp instanceof DefendTower && !(this instanceof FlierRaider) && !((DefendTower) temp).getOnAttackings().contains(this))
+                                    {
+                                        if(!((DefendTower) temp).isStopping())
+                                        {
+                                            translateX=raider.getTranslateX();
+                                            translateY=raider.getTranslateY();
+                                            ((DefendTower) temp).getOnAttackings().add(this);
+                                            ((DefendTower) temp).setStopping(true);
+                                            defendTower=(DefendTower) temp;
+                                            temp.damage(this);
+                                        }
+                                        else
+                                        {
+                                            if(((DefendTower) temp).getOnAttackings().contains(this))
+                                                ((DefendTower) temp).getOnAttackings().remove(this);
+                                            else
+                                            {
+                                                if(!defendTower.equals(temp))
+                                                {
+                                                    ((DefendTower) temp).getOnAttackings().add(this);
+                                                    defendTower=(DefendTower) temp;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if(temp instanceof Artillery && !(this instanceof FlierRaider) )
+                                    {
+                                        translateX=raider.getTranslateX();
+                                        translateY=raider.getTranslateY();
+                                        ((Artillery) temp).getOnAttackings().add(this);
+                                        temp.damage(this);
+                                    }
                                 }
                                 else
                                 {
-                                    if(((DefendTower) temp).getOnAttackings().contains(this))
+                                    if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()==this)
+                                        ((ArcherTower) temp).setAttacking(null);
+                                    if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()==this)
+                                        ((WizardTower) temp).setAttacking(null);
+                                    if(temp instanceof DefendTower && ((DefendTower) temp).isStopping() && ((DefendTower) temp).getOnAttackings().contains(this))
+                                    {
+                                        ((DefendTower) temp).setStopping(false);
                                         ((DefendTower) temp).getOnAttackings().remove(this);
+                                    }
+                                    if(temp instanceof  Artillery)
+                                        ((Artillery) temp).getOnAttackings().remove(this);
+                                }
+                            }
+                    }
+                }
+                else
+                {
+                    time[0] =System.currentTimeMillis();
+                    for(Tower temp: MapController.getMap().getTowers())
+                        if(temp!=null)
+                        {
+                            double startX=temp.getTower().getLayoutX()-temp.getDomain();
+                            double startY=temp.getTower().getLayoutY()-temp.getDomain();
+                            double endX=temp.getTower().getLayoutX()+temp.getDomain();
+                            double endY=temp.getTower().getLayoutY()+temp.getDomain();
+                            if(raider.getLayoutX()+raider.getTranslateX()>=startX && raider.getLayoutX()+raider.getTranslateX()<=endX && raider.getLayoutY()+raider.getTranslateY()>=startY && raider.getLayoutY()+raider.getTranslateY()<=endY)
+                            {
+                                if(temp instanceof ArcherTower && (((ArcherTower) temp).getAttacking()==null || ((ArcherTower) temp).getAttacking().equals(this)))
+                                {
+                                    translateX=raider.getTranslateX();
+                                    translateY=raider.getTranslateY();
+                                    ((ArcherTower) temp).setAttacking(this);
+                                    temp.damage(this);
+                                }
+                                if(temp instanceof WizardTower && (((WizardTower) temp).getAttacking()==null || ((WizardTower) temp).getAttacking().equals(this)))
+                                {
+                                    translateX=raider.getTranslateX();
+                                    translateY=raider.getTranslateY();
+                                    ((WizardTower) temp).setAttacking(this);
+                                    temp.damage(this);
+                                }
+                                if(temp instanceof DefendTower && !(this instanceof FlierRaider) && !((DefendTower) temp).getOnAttackings().contains(this))
+                                {
+                                    if(!((DefendTower) temp).isStopping())
+                                    {
+                                        translateX=raider.getTranslateX();
+                                        translateY=raider.getTranslateY();
+                                        ((DefendTower) temp).getOnAttackings().add(this);
+                                        ((DefendTower) temp).setStopping(true);
+                                        defendTower=(DefendTower) temp;
+                                        temp.damage(this);
+                                    }
                                     else
                                     {
-                                        if(!defendTower.equals(temp))
+                                        if(((DefendTower) temp).getOnAttackings().contains(this))
+                                            ((DefendTower) temp).getOnAttackings().remove(this);
+                                        else
                                         {
-                                            ((DefendTower) temp).getOnAttackings().add(this);
-                                            defendTower=(DefendTower) temp;
+                                            if(!defendTower.equals(temp))
+                                            {
+                                                ((DefendTower) temp).getOnAttackings().add(this);
+                                                defendTower=(DefendTower) temp;
+                                            }
                                         }
                                     }
                                 }
+                                if(temp instanceof Artillery && !(this instanceof FlierRaider) )
+                                {
+                                    translateX=raider.getTranslateX();
+                                    translateY=raider.getTranslateY();
+                                    ((Artillery) temp).getOnAttackings().add(this);
+                                    temp.damage(this);
+                                }
                             }
-                            if(temp instanceof Artillery && !(this instanceof FlierRaider) )
+                            else
                             {
-                                translateX=raider.getTranslateX();
-                                translateY=raider.getTranslateY();
-                                ((Artillery) temp).getOnAttackings().add(this);
-                                temp.damage(this);
+                                if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()==this)
+                                    ((ArcherTower) temp).setAttacking(null);
+                                if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()==this)
+                                    ((WizardTower) temp).setAttacking(null);
+                                if(temp instanceof DefendTower && ((DefendTower) temp).isStopping() && ((DefendTower) temp).getOnAttackings().contains(this))
+                                {
+                                    ((DefendTower) temp).setStopping(false);
+                                    ((DefendTower) temp).getOnAttackings().remove(this);
+                                }
+                                if(temp instanceof  Artillery)
+                                    ((Artillery) temp).getOnAttackings().remove(this);
                             }
                         }
-                        else
-                        {
-                            if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()==this)
-                                ((ArcherTower) temp).setAttacking(null);
-                            if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()==this)
-                                ((WizardTower) temp).setAttacking(null);
-                            if(temp instanceof DefendTower && ((DefendTower) temp).isStopping() && ((DefendTower) temp).getOnAttackings().contains(this))
-                            {
-                                ((DefendTower) temp).setStopping(false);
-                                ((DefendTower) temp).getOnAttackings().remove(this);
-                            }
-                            if(temp instanceof  Artillery)
-                                ((Artillery) temp).getOnAttackings().remove(this);
-                        }
-                    }
+                }
             }
         }));
         timeline.setCycleCount(steps);
@@ -269,7 +356,7 @@ public abstract class Raider
             {
                 Controller.getController().getHearts().setText(String.valueOf(Integer.parseInt(Controller.getController().getHearts().getText())-1));
                 Controller.getController().getMap().getChildren().remove(this.getRaider());
-                MapController.getMap().getRaidersInMap().remove(raider);
+                MapController.getMap().getRaidersInMap().remove(this);
                 for(Tower temp:MapController.getMap().getTowers())
                 {
                     if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()==this)

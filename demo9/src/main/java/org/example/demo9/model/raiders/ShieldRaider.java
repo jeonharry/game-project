@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class ShieldRaider extends Raider
 {
     private boolean haveShield=true;
-    public ShieldRaider(int loot, ArrayList<ArrayList<Double>> road) {
-        super(70, loot, 50, 2500,road,new ImageView(new Image(Main.class.getResource("pics/shield/6_enemies_1_walk_000.png").toExternalForm())));
+    public ShieldRaider(int health,int loot, ArrayList<ArrayList<Double>> road) {
+        super(health, loot, 50, 2500,road,new ImageView(new Image(Main.class.getResource("pics/shield/6_enemies_1_walk_000.png").toExternalForm())));
         ArrayList <Image> images=new ArrayList<>();
         images.add(new Image(Main.class.getResource("pics/shield/6_enemies_1_walk_000.png").toExternalForm()));
         images.add(new Image(Main.class.getResource("pics/shield/6_enemies_1_walk_001.png").toExternalForm()));

@@ -1,5 +1,6 @@
 package org.example.demo9.model;
 
+import javafx.animation.Timeline;
 import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.towers.Tower;
 
@@ -9,13 +10,13 @@ public class Map
 {
     private final int coins;
     private final ArrayList <Double> towerPlaces;
-    private final ArrayList <ArrayList<Double>> heroPlaces;
+    private final ArrayList<ArrayList <ArrayList<Double>>> heroPlaces;
     private final ArrayList <Double> endPoint;
     private ArrayList <Tower> towers=new ArrayList<>();
     private ArrayList <Raider> raidersInMap=new ArrayList<>();
     private final ArrayList <Direction> directions;
     private final int attackWaves;
-    public Map(int coins, ArrayList <Double> towerPlaces, ArrayList <ArrayList<Double>> heroPlaces, ArrayList <Double> endPoint,ArrayList <Direction> directions ,int attackWaves)
+    public Map(int coins, ArrayList <Double> towerPlaces,ArrayList <ArrayList <ArrayList<Double>>> heroPlaces, ArrayList <Double> endPoint,ArrayList <Direction> directions ,int attackWaves)
     {
         this.coins=coins;
         this.towerPlaces = towerPlaces;
@@ -33,7 +34,7 @@ public class Map
         return towerPlaces;
     }
 
-    public ArrayList<ArrayList<Double>> getHeroPlaces() {
+    public ArrayList <ArrayList<ArrayList<Double>>> getHeroPlaces() {
         return heroPlaces;
     }
 
