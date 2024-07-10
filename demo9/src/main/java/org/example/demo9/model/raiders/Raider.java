@@ -202,7 +202,7 @@ public abstract class Raider
                                         ((WizardTower) temp).setAttacking(this);
                                         temp.damage(this);
                                     }
-                                    if(temp instanceof DefendTower && !(this instanceof FlierRaider) && !((DefendTower) temp).getOnAttackings().contains(this))
+                                    if(temp instanceof DefendTower && !((DefendTower) temp).getOnAttackings().contains(this))
                                     {
                                         if(!((DefendTower) temp).isStopping())
                                         {
@@ -227,7 +227,7 @@ public abstract class Raider
                                             }
                                         }
                                     }
-                                    if(temp instanceof Artillery && !(this instanceof FlierRaider) )
+                                    if(temp instanceof Artillery)
                                     {
                                         translateX=raider.getTranslateX();
                                         translateY=raider.getTranslateY();

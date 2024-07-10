@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" prefHeight="460.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo9.MapController">
    <children>
-      <ImageView fitHeight="472.0" fitWidth="854.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="472.0" fitWidth="854.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/Screenshot_20240706_122243_Kingdom%20Rush.jpg" />
          </image>
@@ -47,6 +50,86 @@
       <ImageView fx:id="nextWave" fitHeight="50.0" fitWidth="38.0" layoutX="354.0" layoutY="5.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/Clipped_image_20240707_201009.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <HBox fx:id="spells" alignment="CENTER" layoutX="58.0" layoutY="404.0" prefHeight="40.0" prefWidth="230.0" spacing="10.0" style="-fx-background-color: #00000066; -fx-background-radius: 10;" visible="false">
+         <children>
+            <StackPane onMouseClicked="#pickBoy" prefHeight="40.0" prefWidth="40.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091219.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="boyAmount" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2">
+                     <StackPane.margin>
+                        <Insets right="17.0" top="19.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </StackPane>
+            <StackPane onMouseClicked="#pickFreeze" prefHeight="40.0" prefWidth="40.0">
+               <children>
+                  <ImageView fitHeight="49.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091357.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="freezeAmount" alignment="CENTER" prefHeight="19.0" prefWidth="19.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2">
+                     <StackPane.margin>
+                        <Insets right="17.0" top="19.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </StackPane>
+            <StackPane onMouseClicked="#pickHeal" prefHeight="40.0" prefWidth="40.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091307.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="healAmount" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2">
+                     <StackPane.margin>
+                        <Insets right="17.0" top="19.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </StackPane>
+            <StackPane onMouseClicked="#pickCoin" prefHeight="40.0" prefWidth="40.0">
+               <children>
+                  <ImageView fitHeight="44.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pics/Clipped_image_20240706_091241.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="coinAmount" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #000000; -fx-background-radius: 40;" text="0" textFill="#faffd2">
+                     <StackPane.margin>
+                        <Insets right="17.0" top="19.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </StackPane>
+         </children>
+      </HBox>
+      <ImageView fitHeight="59.0" fitWidth="65.0" layoutX="18.0" layoutY="392.0" onMouseClicked="#showSpells" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/Clipped_image_20240706_090059.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

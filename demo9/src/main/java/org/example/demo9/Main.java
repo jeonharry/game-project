@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.demo9.model.Database;
 import javafx.scene.media.Media;
@@ -82,7 +83,8 @@ public class Main extends Application {
         directions.add(Direction.LEFT);
         directions.add(Direction.DOWN);
         directions.add(Direction.UP);
-        Map firstMap=new Map(250,towerPlaces,roads,end,directions,5);
+        Image image=new Image(Main.class.getResource("pics/Screenshot_20240706_122243_Kingdom Rush.jpg").toExternalForm());
+        Map firstMap=new Map(250,towerPlaces,roads,end,directions,image,5);
         Database.getDatabase().getMaps().add(firstMap);
     }
     public static ArrayList<Double> makeSpot(double x,double y)

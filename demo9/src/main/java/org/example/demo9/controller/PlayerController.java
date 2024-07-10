@@ -1,9 +1,6 @@
 package org.example.demo9.controller;
 
-import org.example.demo9.exceptions.NotEnoughGems;
-import org.example.demo9.exceptions.UserNameExist;
-import org.example.demo9.exceptions.WrongPassword;
-import org.example.demo9.exceptions.WrongUserName;
+import org.example.demo9.exceptions.*;
 import org.example.demo9.model.*;
 import org.example.demo9.model.spells.*;
 
@@ -71,7 +68,7 @@ public class PlayerController
         if(player.getGems()<price)
             throw new NotEnoughGems();
         player.setGems(player.getGems()-price);
-        Database.getDatabase().addSpell(player.getID(),spellName,price);
+        Database.getDatabase().addSpell(player.getID(),spellName);
         player.getBackpack().add(spell);
         Database.getDatabase().updatePlayerInfoGema(player.getGems(),player.getID());
     }
@@ -132,5 +129,38 @@ public class PlayerController
     public void updateLevel(long level) throws SQLException {
         player.setLevel(level);
         Database.getDatabase().updatePlayerInfoLevel(level, player.getID());
+    }
+    public Spell useSpell(String spellName) throws Exception {
+        for(Spell temp:player.getBackpack())
+        {
+            if(temp!=null)
+            {
+                if(temp instanceof HealSpell && spellName.compareTo("heal")==0)
+                {
+                    Database.getDatabase().useSpell(player.getID(),spellName);
+                    player.getBackpack().remove(temp);
+                    return temp;
+                }
+                else if(temp instanceof CoinSpell && spellName.compareTo("coin")==0)
+                {
+                    Database.getDatabase().useSpell(player.getID(),spellName);
+                    player.getBackpack().remove(temp);
+                    return temp;
+                }
+                else if(temp instanceof FreezeSpell && spellName.compareTo("freeze")==0)
+                {
+                    Database.getDatabase().useSpell(player.getID(),spellName);
+                    player.getBackpack().remove(temp);
+                    return temp;
+                }
+                else if(temp instanceof BoySpell && spellName.compareTo("boy")==0)
+                {
+                    Database.getDatabase().useSpell(player.getID(),spellName);
+                    player.getBackpack().remove(temp);
+                    return temp;
+                }
+            }
+        }
+        throw new NoSpell();
     }
 }

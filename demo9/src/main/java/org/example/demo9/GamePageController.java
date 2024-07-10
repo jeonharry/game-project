@@ -57,6 +57,7 @@ public class GamePageController implements Initializable {
     void playFirstMap(MouseEvent event) throws IOException {
         MapController.setMap(Database.getDatabase().getMaps().getFirst());
         MapController.setMapNum(1);
+        MapController.setImage(Database.getDatabase().getMaps().getFirst().getImage());
         FXMLLoader loader=new FXMLLoader(Main.class.getResource("Map.fxml"));
         Main.getStage().setScene(new Scene(loader.load(),840,460));
     }

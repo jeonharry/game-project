@@ -1,6 +1,10 @@
 package org.example.demo9.model.spells;
 
+import org.example.demo9.MapController;
+import org.example.demo9.controller.Controller;
+import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.spells.Spell;
+import org.example.demo9.model.towers.*;
 
 public class BoySpell implements Spell {
     private static int price=500;
@@ -12,10 +16,40 @@ public class BoySpell implements Spell {
 
     @Override
     public void drop() {
-
+        for(Raider raider: MapController.getMap().getRaidersInMap())
+            if(raider!=null)
+            {
+                raider.getTransition().stop();
+                Controller.getController().getMap().getChildren().remove(raider.getRaider());
+                Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(raider.getLoot())));
+                raider.getRaider().setLayoutY(0);
+                raider.getRaider().setLayoutX(0);
+                die(raider);
+            }
+        MapController.getMap().getRaidersInMap().removeAll(MapController.getMap().getRaidersInMap());
     }
 
     public static String getInfo() {
         return info;
+    }
+    public void die(Raider raider)
+    {
+        for(Tower temp:MapController.getMap().getTowers())
+            if(temp!=null)
+            {
+                if(raider!=null)
+                {
+                    if(temp instanceof ArcherTower && ((ArcherTower) temp).getAttacking()!=null)
+                        if(((ArcherTower) temp).getAttacking().equals(raider))
+                            ((ArcherTower) temp).setAttacking(null);
+                    if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
+                        if(((WizardTower) temp).getAttacking().equals(raider))
+                            ((WizardTower) temp).setAttacking(null);
+                    if(temp instanceof Artillery)
+                        ((Artillery) temp).getOnAttackings().remove(raider);
+                    if(temp instanceof DefendTower)
+                        ((DefendTower) temp).getOnAttackings().remove(raider);
+                }
+            }
     }
 }

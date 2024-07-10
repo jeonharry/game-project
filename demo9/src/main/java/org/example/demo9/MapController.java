@@ -10,15 +10,19 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
 import org.example.demo9.controller.Controller;
+import org.example.demo9.controller.PlayerController;
 import org.example.demo9.model.Map;
 import org.example.demo9.model.raiders.*;
+import org.example.demo9.model.spells.Spell;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,9 +46,112 @@ public class MapController implements Initializable {
 
     @FXML
     private ImageView nextWave;
+    @FXML
+    private ImageView background;
+
+    @FXML
+    private Label freezeAmount;
+
+    @FXML
+    private Label healAmount;
+
+    @FXML
+    private Label boyAmount;
+
+    @FXML
+    private Label coinAmount;
+
+    @FXML
+    private HBox spells;
+
+    private static Image image;
     private static Map map;
     private static int mapNum;
+    private long time;
+    private boolean use=false;
 
+    @FXML
+    void pickBoy(MouseEvent event) throws Exception {
+        try
+        {
+            Spell spell=PlayerController.getPlayerController().useSpell("boy");
+            loadSpells();
+            spell.drop();
+            use=true;
+            spells.setVisible(false);
+        }catch (Exception exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+            throw exception;
+        }
+    }
+
+    @FXML
+    void pickCoin(MouseEvent event) {
+        try
+        {
+            Spell spell=PlayerController.getPlayerController().useSpell("coin");
+            loadSpells();
+            spell.drop();
+            use=true;
+            spells.setVisible(false);
+        }catch (Exception exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void pickFreeze(MouseEvent event) {
+        try
+        {
+            Spell spell=PlayerController.getPlayerController().useSpell("freeze");
+            loadSpells();
+            spell.drop();
+            use=true;
+            spells.setVisible(false);
+        }catch (Exception exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void pickHeal(MouseEvent event) {
+        try
+        {
+            Spell spell=PlayerController.getPlayerController().useSpell("heal");
+            loadSpells();
+            spell.drop();
+            use=true;
+            spells.setVisible(false);
+        }catch (Exception exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error");
+            alert.setHeaderText(exception.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void showSpells(MouseEvent event) {
+        if(use)
+        {
+            if(System.currentTimeMillis()-time>=6000)
+            {
+                time=System.currentTimeMillis();
+                spells.setVisible(!spells.isVisible());
+            }
+        }
+        else
+            spells.setVisible(!spells.isVisible());
+    }
     @FXML
     void start(MouseEvent event) {
         nextWave.setVisible(false);
@@ -78,12 +185,15 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //play music
+        time=System.currentTimeMillis();
+        background.setImage(image);
         Controller.getController().setCoins(coins);
         Controller.getController().setHearts(hearts);
         Controller.getController().setWaves(waves);
         Controller.getController().setMap(root);
         waves.setText("0/"+String.valueOf(map.getAttackWaves()));
         coins.setText(String.valueOf(map.getCoins()));
+        loadSpells();
         for(int i=0;i<map.getTowerPlaces().size();i++)
             if(map.getTowerPlaces().get(i)!=null)
             {
@@ -195,11 +305,27 @@ public class MapController implements Initializable {
         roads.add(road2);
         return roads;
     }
+
+    private void loadSpells()
+    {
+        boyAmount.setText(String.valueOf(PlayerController.getPlayerController().getBoySpellAmount()));
+        freezeAmount.setText(String.valueOf(PlayerController.getPlayerController().getFreezeSpellAmount()));
+        coinAmount.setText(String.valueOf(PlayerController.getPlayerController().getCoinSpellAmount()));
+        healAmount.setText(String.valueOf(PlayerController.getPlayerController().getHealSpellAmount()));
+    }
     public static int getMapNum() {
         return mapNum;
     }
 
     public static void setMapNum(int mapNum) {
         MapController.mapNum = mapNum;
+    }
+
+    public static Image getImage() {
+        return image;
+    }
+
+    public static void setImage(Image image) {
+        MapController.image = image;
     }
 }
