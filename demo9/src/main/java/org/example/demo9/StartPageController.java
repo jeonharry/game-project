@@ -1,5 +1,7 @@
 package org.example.demo9;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
 
@@ -65,6 +69,12 @@ public class StartPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(Controller.getController().getMusic()!=null)
+            Controller.getController().getMusic().stop();
+        MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/12. Linirea (bonus free track!).mp3").toExternalForm()));
+        Controller.getController().setMusic(music);
+        music.setCycleCount(MediaPlayer.INDEFINITE);
+        music.play();
         Controller.getController().setStartPageRoot(root);
         Controller.getController().setLoginStackPane(logedinStackPane);
         Controller.getController().setLogout_btn(logout);
@@ -84,13 +94,5 @@ public class StartPageController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //        MediaPlayer music=new MediaPlayer(new Media(""));
-//        volume.setValue(music.getVolume()*100);
-//        volume.valueProperty().addListener(new InvalidationListener() {
-//            @Override
-//            public void invalidated(Observable observable) {
-//                music.setVolume(volume.getValue()/100);
-//            }
-//        });
     }
 }

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class ArcherTower extends Tower
 {
     private Raider attacking=null;
-    public ArcherTower(double domain) throws IOException {
-        super(20,70 ,90,domain,"pics/archer1.png");
+    public ArcherTower(double domain,int damage) throws IOException {
+        super(damage,70 ,90,domain,"pics/archer1.png");
         ArrayList <Image> imagesForAnimate=new ArrayList<>();
         imagesForAnimate.add(new Image(Main.class.getResource("pics/archer1.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/archer2.png").toExternalForm()));

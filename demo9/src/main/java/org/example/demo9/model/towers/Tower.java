@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
@@ -458,5 +460,12 @@ public abstract class Tower
             }
         if(Controller.getController().getWaves().getText().compareTo(MapController.getMap().getAttackWaves()+"/"+MapController.getMap().getAttackWaves())==0 && MapController.getMap().getRaidersInMap().isEmpty())
             MapController.win();
+        if(MapController.getMap().getRaidersInMap().isEmpty())
+        {
+            Controller.getController().getMusic().stop();
+            Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+            Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
+            Controller.getController().getMusic().play();
+        }
     }
 }

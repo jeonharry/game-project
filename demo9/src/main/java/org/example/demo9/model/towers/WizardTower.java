@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class WizardTower extends Tower
 {
     private Raider attacking=null;
-    public WizardTower( double domain) throws IOException {
-        super(25, 100, 110,domain,"pics/wizard1.png");
+    public WizardTower( double domain,int damage) throws IOException {
+        super(damage, 100, 110,domain,"pics/wizard1.png");
         ArrayList<Image> imagesForAnimate=new ArrayList<>();
         imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard1.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/wizard2.png").toExternalForm()));

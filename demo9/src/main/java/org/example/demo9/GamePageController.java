@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
 import org.example.demo9.model.Database;
@@ -79,6 +81,10 @@ public class GamePageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Controller.getController().getMusic().stop();
+        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/01. Main Theme.mp3").toExternalForm())));
+        Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
+        Controller.getController().getMusic().play();
         Controller.getController().setGems(gems);
         Controller.getController().setGamePage(root);
         level.setText("Lv."+String.valueOf(PlayerController.getPlayer().getLevel()));
@@ -102,14 +108,6 @@ public class GamePageController implements Initializable {
         {
             forthMap.setImage(new Image(Main.class.getResource("pics/Clipped_image_20240705_112219.png").toExternalForm()));
         }
-        //        MediaPlayer music=new MediaPlayer(new Media(""));
-//        volume.setValue(music.getVolume()*100);
-//        volume.valueProperty().addListener(new InvalidationListener() {
-//            @Override
-//            public void invalidated(Observable observable) {
-//                music.setVolume(volume.getValue()/100);
-//            }
-//        });
     }
     public void win(long mapNum)
     {

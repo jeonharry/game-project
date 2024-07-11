@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 
 
@@ -25,6 +26,7 @@ public class Controller
     private Ellipse towerPlace;
     private Node selectedTowerUpgrade;
     private Node pageForUpgrade=null;
+    private MediaPlayer music=null;
     private Controller(){}
 
     public static Controller getController() {
@@ -143,5 +145,13 @@ public class Controller
 
     public void setPageForUpgrade(Node pageForUpgrade) {
         this.pageForUpgrade = pageForUpgrade;
+    }
+
+    public MediaPlayer getMusic() {
+        return music;
+    }
+
+    public void setMusic(MediaPlayer music) {
+        this.music = music;
     }
 }

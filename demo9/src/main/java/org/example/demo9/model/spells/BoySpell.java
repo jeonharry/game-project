@@ -1,9 +1,11 @@
 package org.example.demo9.model.spells;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import org.example.demo9.Main;
 import org.example.demo9.MapController;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.model.raiders.Raider;
-import org.example.demo9.model.spells.Spell;
 import org.example.demo9.model.towers.*;
 
 public class BoySpell implements Spell {
@@ -29,6 +31,10 @@ public class BoySpell implements Spell {
         MapController.getMap().getRaidersInMap().removeAll(MapController.getMap().getRaidersInMap());
         if(Controller.getController().getWaves().getText().compareTo(MapController.getMap().getAttackWaves()+"/"+MapController.getMap().getAttackWaves())==0)
             MapController.win();
+        Controller.getController().getMusic().stop();
+        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+        Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
+        Controller.getController().getMusic().play();
     }
 
     public static String getInfo() {

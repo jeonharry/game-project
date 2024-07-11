@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
@@ -185,7 +187,10 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //play music
+        Controller.getController().getMusic().stop();
+        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+        Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
+        Controller.getController().getMusic().play();
         time=System.currentTimeMillis();
         background.setImage(image);
         Controller.getController().setCoins(coins);
@@ -238,6 +243,10 @@ public class MapController implements Initializable {
     }
     private void makeWaves(int waveNum)
     {
+        Controller.getController().getMusic().stop();
+        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/03. Under Attack.mp3").toExternalForm())));
+        Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
+        Controller.getController().getMusic().play();
         ArrayList<ArrayList <ArrayList <ArrayList<Double>>>> manyRoads=new ArrayList<>();
         for(int j=0;j<map.getHeroPlaces().size();++j)
             manyRoads.add(makeRoads(j));

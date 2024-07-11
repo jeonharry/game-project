@@ -1,5 +1,7 @@
 package org.example.demo9;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -95,5 +97,12 @@ public class SettingInGameController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         newUsernameHbox.setVisible(false);
         newPasswordHbox.setVisible(false);
+        volume.setValue(Controller.getController().getMusic().getVolume()*100);
+        volume.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                Controller.getController().getMusic().setVolume(volume.getValue()/100);
+            }
+        });
     }
 }

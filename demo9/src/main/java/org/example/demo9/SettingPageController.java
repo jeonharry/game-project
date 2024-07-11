@@ -29,13 +29,12 @@ public class SettingPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        MediaPlayer music=new MediaPlayer(new Media(""));
-//        volume.setValue(music.getVolume()*100);
-//        volume.valueProperty().addListener(new InvalidationListener() {
-//            @Override
-//            public void invalidated(Observable observable) {
-//                music.setVolume(volume.getValue()/100);
-//            }
-//        });
+        volume.setValue(Controller.getController().getMusic().getVolume()*100);
+        volume.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                Controller.getController().getMusic().setVolume(volume.getValue()/100);
+            }
+        });
     }
 }

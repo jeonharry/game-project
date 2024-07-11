@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class Artillery extends Tower
 {
     private ArrayList <Raider> onAttackings=new ArrayList<>();
-    public Artillery(double domain) throws IOException {
-        super(15, 125,100,domain,"pics/bomb1.png");
+    public Artillery(double domain,int damage) throws IOException {
+        super(damage, 125,100,domain,"pics/bomb1.png");
         ArrayList<Image> imagesForAnimate=new ArrayList<>();
         imagesForAnimate.add(new Image(Main.class.getResource("pics/bomb1.png").toExternalForm()));
         imagesForAnimate.add(new Image(Main.class.getResource("pics/bomb2.png").toExternalForm()));
