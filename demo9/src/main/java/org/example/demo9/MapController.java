@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,6 +20,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
@@ -72,6 +74,12 @@ public class MapController implements Initializable {
     private long time;
     private boolean use=false;
     private static boolean lose=false;
+
+    @FXML
+    void back(MouseEvent event) throws IOException {
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("GamePage.fxml"));
+        Main.getStage().setScene(new Scene(loader.load(),840,460));
+    }
 
     @FXML
     void pickBoy(MouseEvent event) throws Exception {
@@ -193,6 +201,26 @@ public class MapController implements Initializable {
         Controller.getController().getMusic().play();
         time=System.currentTimeMillis();
         background.setImage(image);
+        nextWave.setLayoutX(map.getStartButton().getFirst());
+        nextWave.setLayoutY(map.getStartButton().getLast());
+        if(mapNum==2)
+        {
+            Rotate rotate=new Rotate();
+            rotate.setAngle(90);
+            nextWave.getTransforms().add(rotate);
+        }
+        if(mapNum==3)
+        {
+            Rotate rotate=new Rotate();
+            rotate.setAngle(180);
+            nextWave.getTransforms().add(rotate);
+        }
+        if(mapNum==4)
+        {
+            Rotate rotate=new Rotate();
+            rotate.setAngle(-90);
+            nextWave.getTransforms().add(rotate);
+        }
         Controller.getController().setCoins(coins);
         Controller.getController().setHearts(hearts);
         Controller.getController().setWaves(waves);
@@ -326,7 +354,7 @@ public class MapController implements Initializable {
     public static void win()
     {
         WinPageController.setMap(map);
-        WinPageController.setGems(300L *(mapNum-1));
+        WinPageController.setGems(300L *mapNum);
         FXMLLoader loader=new FXMLLoader(Main.class.getResource("WinPage.fxml"));
         try {
             Controller.getController().getMap().getChildren().add(loader.load());

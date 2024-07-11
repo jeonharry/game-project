@@ -1,6 +1,5 @@
 package org.example.demo9.model;
 
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.towers.Tower;
@@ -15,10 +14,11 @@ public class Map
     private final ArrayList <Double> endPoint;
     private ArrayList <Tower> towers=new ArrayList<>();
     private ArrayList <Raider> raidersInMap=new ArrayList<>();
+    private final ArrayList <Double> startButton;
     private final ArrayList <Direction> directions;
     private final int attackWaves;
     private final Image image;
-    public Map(int coins, ArrayList <Double> towerPlaces,ArrayList <ArrayList <ArrayList<Double>>> heroPlaces, ArrayList <Double> endPoint,ArrayList <Direction> directions ,Image image,int attackWaves)
+    public Map(int coins, ArrayList <Double> towerPlaces,ArrayList <ArrayList <ArrayList<Double>>> heroPlaces, ArrayList <Double> endPoint,ArrayList <Direction> directions ,Image image,ArrayList <Double> startButton,int attackWaves)
     {
         this.coins=coins;
         this.towerPlaces = towerPlaces;
@@ -27,6 +27,7 @@ public class Map
         this.attackWaves = attackWaves;
         this.directions=directions;
         this.image=image;
+        this.startButton=startButton;
     }
 
     public int getCoins() {
@@ -71,5 +72,9 @@ public class Map
 
     public Image getImage() {
         return image;
+    }
+
+    public ArrayList<Double> getStartButton() {
+        return startButton;
     }
 }

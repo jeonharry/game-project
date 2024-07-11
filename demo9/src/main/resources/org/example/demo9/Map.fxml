@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -127,13 +128,24 @@
             </StackPane>
          </children>
       </HBox>
-      <ImageView fitHeight="59.0" fitWidth="65.0" layoutX="18.0" layoutY="392.0" onMouseClicked="#showSpells" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="69.0" fitWidth="72.0" layoutX="6.0" layoutY="392.0" onMouseClicked="#showSpells" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@pics/Clipped_image_20240706_090059.png" />
+            <Image url="@pics/Clipped_image_20240711_140541.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </ImageView>
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="797.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@pics/Clipped_image_20240704_142400.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.81" />
+         </effect>
       </ImageView>
    </children>
 </AnchorPane>

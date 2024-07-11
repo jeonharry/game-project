@@ -42,6 +42,8 @@ public class GamePageController implements Initializable {
 
     @FXML
     private ImageView thirdMap;
+    private static boolean win=false;
+    private static int num=0;
 
     @FXML
     void openSetting(MouseEvent event) throws IOException {
@@ -65,22 +67,36 @@ public class GamePageController implements Initializable {
     }
 
     @FXML
-    void playSecondMap(MouseEvent event) {
-
+    void playSecondMap(MouseEvent event) throws IOException {
+        MapController.setMap(Database.getDatabase().getMaps().get(1));
+        MapController.setMapNum(2);
+        MapController.setImage(Database.getDatabase().getMaps().get(1).getImage());
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("Map.fxml"));
+        Main.getStage().setScene(new Scene(loader.load(),840,460));
     }
 
     @FXML
-    void playThirdMap(MouseEvent event) {
-
+    void playThirdMap(MouseEvent event) throws IOException {
+        MapController.setMap(Database.getDatabase().getMaps().get(2));
+        MapController.setMapNum(3);
+        MapController.setImage(Database.getDatabase().getMaps().get(2).getImage());
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("Map.fxml"));
+        Main.getStage().setScene(new Scene(loader.load(),840,460));
     }
 
     @FXML
-    void playForthMap(MouseEvent event) {
-
+    void playForthMap(MouseEvent event) throws IOException {
+        MapController.setMap(Database.getDatabase().getMaps().get(3));
+        MapController.setMapNum(4);
+        MapController.setImage(Database.getDatabase().getMaps().get(3).getImage());
+        FXMLLoader loader=new FXMLLoader(Main.class.getResource("Map.fxml"));
+        Main.getStage().setScene(new Scene(loader.load(),840,460));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(win)
+            win(num);
         Controller.getController().getMusic().stop();
         Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/01. Main Theme.mp3").toExternalForm())));
         Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
@@ -174,5 +190,21 @@ public class GamePageController implements Initializable {
             }
             level.setText("Lv."+String.valueOf(PlayerController.getPlayer().getLevel()));
         }
+    }
+
+    public static boolean isWin() {
+        return win;
+    }
+
+    public static void setWin(boolean win) {
+        GamePageController.win = win;
+    }
+
+    public static int getNum() {
+        return num;
+    }
+
+    public static void setNum(int num) {
+        GamePageController.num = num;
     }
 }

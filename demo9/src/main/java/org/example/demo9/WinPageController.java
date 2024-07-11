@@ -44,6 +44,8 @@ public class WinPageController implements Initializable {
         if(PlayerController.getPlayer().getLevel()==MapController.getMapNum())
         {
             collectedGems.setText(String.valueOf(getGems()));
+            GamePageController.setWin(true);
+            GamePageController.setNum(MapController.getMapNum());
             try {
                 PlayerController.getPlayerController().updateGems(gems);
             } catch (SQLException e) {
