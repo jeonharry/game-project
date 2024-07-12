@@ -20,9 +20,6 @@ import java.util.ResourceBundle;
 public class TowerGeneratorController implements Initializable {
 
     @FXML
-    private AnchorPane afterBuild;
-
-    @FXML
     private Label archerPrice;
 
     @FXML
@@ -39,18 +36,6 @@ public class TowerGeneratorController implements Initializable {
 
     @FXML
     private Label defPrice;
-
-    @FXML
-    private ImageView defTick;
-
-    @FXML
-    private ImageView sellTick;
-
-    @FXML
-    private Label upgradePrice;
-
-    @FXML
-    private ImageView upgradeTick;
 
     @FXML
     private Label wizardPrice;
@@ -264,7 +249,7 @@ public class TowerGeneratorController implements Initializable {
     @FXML
     void pickArcher(MouseEvent event) {
         archerTick.setVisible(true);
-        defTick.setVisible(false);
+//        defTick.setVisible(false);
         wizardTick.setVisible(false);
         bombTick.setVisible(false);
     }
@@ -272,7 +257,7 @@ public class TowerGeneratorController implements Initializable {
     @FXML
     void pickBomb(MouseEvent event) {
         archerTick.setVisible(false);
-        defTick.setVisible(false);
+//        defTick.setVisible(false);
         wizardTick.setVisible(false);
         bombTick.setVisible(true);
     }
@@ -280,7 +265,7 @@ public class TowerGeneratorController implements Initializable {
     @FXML
     void pickDef(MouseEvent event) {
         archerTick.setVisible(false);
-        defTick.setVisible(true);
+//        defTick.setVisible(true);
         wizardTick.setVisible(false);
         bombTick.setVisible(false);
     }
@@ -288,7 +273,7 @@ public class TowerGeneratorController implements Initializable {
     @FXML
     void pickWizard(MouseEvent event) {
         archerTick.setVisible(false);
-        defTick.setVisible(false);
+//        defTick.setVisible(false);
         wizardTick.setVisible(true);
         bombTick.setVisible(false);
     }
@@ -297,7 +282,8 @@ public class TowerGeneratorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         archerPrice.setText(String.valueOf(TowerPrices.ARCHER.getPrice()));
         bombPrice.setText(String.valueOf(TowerPrices.BOMB.getPrice()));
-        defPrice.setText(String.valueOf(TowerPrices.DEF.getPrice()));
+//        defPrice.setText(String.valueOf(TowerPrices.DEF.getPrice()));
+        defPrice.setText("000");
         wizardPrice.setText(String.valueOf(TowerPrices.WIZARD.getPrice()));
     }
     public void showError()
