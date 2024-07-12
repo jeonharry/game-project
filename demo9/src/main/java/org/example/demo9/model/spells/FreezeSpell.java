@@ -121,14 +121,14 @@ public class FreezeSpell implements Spell {
                     }));
                 }
         }));
-        stop.getKeyFrames().add(new KeyFrame(Duration.millis(3050),e ->{
+        stop.getKeyFrames().add(new KeyFrame(Duration.millis(2050),e ->{
             for(Raider raider: MapController.getMap().getRaidersInMap())
                 if(raider!=null)
                 {
                     raider.getTransition().play();
                 }
         }));
-        timeline.setCycleCount(30);
+        timeline.setCycleCount(20);
         stop.play();
         timeline.play();
     }

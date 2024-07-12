@@ -127,12 +127,14 @@ public class Database
         String query="SELECT amount FROM backpacks WHERE ID="+ID+" AND spell='"+spell+"'";
         Statement statement=con.prepareStatement(query);
         ResultSet rs=statement.executeQuery(query);
+        boolean exist=false;
         while (rs.next())
         {
             amount=rs.getInt("amount");
+            exist=true;
         }
         String cmd;
-        if(amount==0)
+        if(amount==0 && !exist)
             cmd=String.format("INSERT INTO backpacks (ID,spell,num,amount) VALUES (%d,'%s',%d,%d)",ID,spell,num,amount+1);
         else
             cmd=String.format("UPDATE backpacks SET amount=%d WHERE ID=%d AND spell='%s'",amount+1,ID,spell);
