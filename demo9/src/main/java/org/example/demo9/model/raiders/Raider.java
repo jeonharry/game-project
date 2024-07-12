@@ -146,6 +146,8 @@ public abstract class Raider
         steps/=15;
         this.x=raider.getLayoutX();
         this.y=raider.getLayoutY();
+        if(this instanceof  DisappearingRaider)
+            ((DisappearingRaider) this).setTime(System.currentTimeMillis());
         walk(steps,1);
     }
 
@@ -178,7 +180,7 @@ public abstract class Raider
             {
                 if(this instanceof DisappearingRaider)
                 {
-                    if(((DisappearingRaider) this).isDisapear() && System.currentTimeMillis()- time[0] >8000)
+                    if(((DisappearingRaider) this).isDisapear() && System.currentTimeMillis()- ((DisappearingRaider) this).getTime() >9000)
                     {
                         raider.setVisible(true);
                         ((DisappearingRaider) this).setDisapear(false);
@@ -387,7 +389,9 @@ public abstract class Raider
                 if(MapController.getMap().getRaidersInMap().isEmpty())
                 {
                     Controller.getController().getMusic().stop();
-                    Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+                    MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm()));
+                    music.setVolume(Controller.getController().getMusic().getVolume());
+                    Controller.getController().setMusic(music);
                     Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
                     Controller.getController().getMusic().play();
                 }

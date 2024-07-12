@@ -1,10 +1,7 @@
 package org.example.demo9.model.spells;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.demo9.MapController;
 import org.example.demo9.model.raiders.DisappearingRaider;

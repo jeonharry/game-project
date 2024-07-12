@@ -18,6 +18,7 @@ import org.example.demo9.model.Database;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GamePageController implements Initializable {
@@ -59,6 +60,14 @@ public class GamePageController implements Initializable {
 
     @FXML
     void playFirstMap(MouseEvent event) throws IOException {
+        MapController.setLose(false);
+        if(MapController.getTransition()!=null && MapController.getEnd()!=null)
+        {
+            MapController.getEnd().stop();
+            MapController.getTransition().stop();
+        }
+        Database.getDatabase().getMaps().getFirst().setRaidersInMap(new ArrayList<>());
+        Database.getDatabase().getMaps().getFirst().setTowers(new ArrayList<>());
         MapController.setMap(Database.getDatabase().getMaps().getFirst());
         MapController.setMapNum(1);
         MapController.setImage(Database.getDatabase().getMaps().getFirst().getImage());
@@ -68,6 +77,14 @@ public class GamePageController implements Initializable {
 
     @FXML
     void playSecondMap(MouseEvent event) throws IOException {
+        MapController.setLose(false);
+        if(MapController.getTransition()!=null && MapController.getEnd()!=null)
+        {
+            MapController.getEnd().stop();
+            MapController.getTransition().stop();
+        }
+        Database.getDatabase().getMaps().get(1).setRaidersInMap(new ArrayList<>());
+        Database.getDatabase().getMaps().get(1).setTowers(new ArrayList<>());
         MapController.setMap(Database.getDatabase().getMaps().get(1));
         MapController.setMapNum(2);
         MapController.setImage(Database.getDatabase().getMaps().get(1).getImage());
@@ -77,6 +94,14 @@ public class GamePageController implements Initializable {
 
     @FXML
     void playThirdMap(MouseEvent event) throws IOException {
+        MapController.setLose(false);
+        if(MapController.getTransition()!=null && MapController.getEnd()!=null)
+        {
+            MapController.getEnd().stop();
+            MapController.getTransition().stop();
+        }
+        Database.getDatabase().getMaps().get(2).setRaidersInMap(new ArrayList<>());
+        Database.getDatabase().getMaps().get(2).setTowers(new ArrayList<>());
         MapController.setMap(Database.getDatabase().getMaps().get(2));
         MapController.setMapNum(3);
         MapController.setImage(Database.getDatabase().getMaps().get(2).getImage());
@@ -86,6 +111,14 @@ public class GamePageController implements Initializable {
 
     @FXML
     void playForthMap(MouseEvent event) throws IOException {
+        MapController.setLose(false);
+        if(MapController.getTransition()!=null && MapController.getEnd()!=null)
+        {
+            MapController.getEnd().stop();
+            MapController.getTransition().stop();
+        }
+        Database.getDatabase().getMaps().get(3).setRaidersInMap(new ArrayList<>());
+        Database.getDatabase().getMaps().get(3).setTowers(new ArrayList<>());
         MapController.setMap(Database.getDatabase().getMaps().get(3));
         MapController.setMapNum(4);
         MapController.setImage(Database.getDatabase().getMaps().get(3).getImage());
@@ -98,7 +131,9 @@ public class GamePageController implements Initializable {
         if(win)
             win(num);
         Controller.getController().getMusic().stop();
-        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/01. Main Theme.mp3").toExternalForm())));
+        MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/01. Main Theme.mp3").toExternalForm()));
+        music.setVolume(Controller.getController().getMusic().getVolume());
+        Controller.getController().setMusic(music);
         Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
         Controller.getController().getMusic().play();
         Controller.getController().setGems(gems);

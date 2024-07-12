@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class DisappearingRaider extends Raider {
     private boolean disapear=true;
+    private long time;
     public DisappearingRaider(int health,int loot, ArrayList<ArrayList<Double>> road) {
         super( health,loot, 40,2500, road,new ImageView(new Image(Main.class.getResource("pics/disapear/2_enemies_1_walk_000.png").toExternalForm())));
         ArrayList <Image> images=new ArrayList<>();
@@ -40,5 +41,13 @@ public class DisappearingRaider extends Raider {
 
     public void setDisapear(boolean disapear) {
         this.disapear = disapear;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

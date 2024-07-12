@@ -69,9 +69,12 @@ public class StartPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(Controller.getController().getMusic()!=null)
-            Controller.getController().getMusic().stop();
         MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/12. Linirea (bonus free track!).mp3").toExternalForm()));
+        if(Controller.getController().getMusic()!=null)
+        {
+            Controller.getController().getMusic().stop();
+            music.setVolume(Controller.getController().getMusic().getVolume());
+        }
         Controller.getController().setMusic(music);
         music.setCycleCount(MediaPlayer.INDEFINITE);
         music.play();

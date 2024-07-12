@@ -463,7 +463,9 @@ public abstract class Tower
         if(MapController.getMap().getRaidersInMap().isEmpty())
         {
             Controller.getController().getMusic().stop();
-            Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+            MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm()));
+            music.setVolume(Controller.getController().getMusic().getVolume());
+            Controller.getController().setMusic(music);
             Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
             Controller.getController().getMusic().play();
         }

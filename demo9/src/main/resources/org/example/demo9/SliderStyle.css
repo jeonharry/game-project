@@ -7,10 +7,11 @@
     -fx-background-radius: 5px;
 }
 .slider .thumb {
-    /*-fx-background-image: url('pics/images (124).png');*/
-    /*-fx-background-size: cover;*/
-    /*-fx-background-repeat: no-repeat;*/
-    -fx-background-radius: 50%;
-    -fx-pref-width: 18px;
-    -fx-pref-height: 18px;
+    -fx-background-image: url('pics/Clipped_image_20240712_104844.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 50px;
+    -fx-background-color:transparent;
 }

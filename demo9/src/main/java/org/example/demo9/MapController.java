@@ -74,6 +74,8 @@ public class MapController implements Initializable {
     private long time;
     private boolean use=false;
     private static boolean lose=false;
+    private static Timeline transition;
+    private static Timeline end;
 
     @FXML
     void back(MouseEvent event) throws IOException {
@@ -168,6 +170,8 @@ public class MapController implements Initializable {
         nextWave.setVisible(false);
         Timeline timeline=new Timeline();
         Timeline endWave=new Timeline();
+        end=endWave;
+        transition=timeline;
         endWave.getKeyFrames().add(new KeyFrame(Duration.millis(500),e ->{
             if(map.getRaidersInMap().isEmpty())
             {
@@ -196,7 +200,9 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Controller.getController().getMusic().stop();
-        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm())));
+        MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/02. Battle Preparations.mp3").toExternalForm()));
+        music.setVolume(Controller.getController().getMusic().getVolume());
+        Controller.getController().setMusic(music);
         Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
         Controller.getController().getMusic().play();
         time=System.currentTimeMillis();
@@ -272,14 +278,16 @@ public class MapController implements Initializable {
     private void makeWaves(int waveNum)
     {
         Controller.getController().getMusic().stop();
-        Controller.getController().setMusic(new MediaPlayer(new Media(Main.class.getResource("audio/03. Under Attack.mp3").toExternalForm())));
+        MediaPlayer music=new MediaPlayer(new Media(Main.class.getResource("audio/03. Under Attack.mp3").toExternalForm()));
+        music.setVolume(Controller.getController().getMusic().getVolume());
+        Controller.getController().setMusic(music);
         Controller.getController().getMusic().setCycleCount(MediaPlayer.INDEFINITE);
         Controller.getController().getMusic().play();
         ArrayList<ArrayList <ArrayList <ArrayList<Double>>>> manyRoads=new ArrayList<>();
         for(int j=0;j<map.getHeroPlaces().size();++j)
             manyRoads.add(makeRoads(j));
         int counter=0;
-        for(int i=0;i<waveNum+(mapNum-1) && i<5;++i)
+        for(int i=0;i<waveNum+mapNum && i<5;++i)
         {
             Random random=new Random();
             Raider raider;
@@ -289,13 +297,13 @@ public class MapController implements Initializable {
                 if(counter>=roads.size())
                     counter=0;
                 if(random.nextInt(4+(mapNum-1))==0)
-                raider=new FlierRaider(45+((mapNum-1)*10),75+((mapNum-1)*30),roads.get(counter));
+                raider=new FlierRaider(45+((mapNum-1)*10),30+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==1)
-                    raider=new FastRaider(40+((mapNum-1)*10),60+((mapNum-1)*30),roads.get(counter));
+                    raider=new FastRaider(40+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==2)
-                    raider=new DisappearingRaider(35+((mapNum-1)*10),70+((mapNum-1)*30),roads.get(counter));
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
                 else
-                    raider=new ShieldRaider(70+((mapNum-1)*10),80+((mapNum-1)*30),roads.get(counter));
+                    raider=new ShieldRaider(70+((mapNum-1)*10),40+((mapNum-1)*30),roads.get(counter));
                 if(counter<roads.size())
                     counter++;
             }
@@ -305,13 +313,13 @@ public class MapController implements Initializable {
                 if(counter>=roads.size())
                     counter=0;
                 if(random.nextInt(4+(mapNum-1))==0)
-                    raider=new FlierRaider(45+((mapNum-1)*10),75+((mapNum-1)*30),roads.get(counter));
+                    raider=new FlierRaider(45+((mapNum-1)*10),30+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==1)
-                    raider=new FastRaider(40+((mapNum-1)*10),60+((mapNum-1)*30),roads.get(counter));
+                    raider=new FastRaider(40+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==2)
-                    raider=new DisappearingRaider(35+((mapNum-1)*10),70+((mapNum-1)*30),roads.get(counter));
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
                 else
-                    raider=new ShieldRaider(70+((mapNum-1)*10),80+((mapNum-1)*30),roads.get(counter));
+                    raider=new ShieldRaider(70+((mapNum-1)*10),40+((mapNum-1)*30),roads.get(counter));
                 if(counter<roads.size())
                     counter++;
             }
@@ -387,5 +395,21 @@ public class MapController implements Initializable {
 
     public static void setLose(boolean lose) {
         MapController.lose = lose;
+    }
+
+    public static Timeline getTransition() {
+        return transition;
+    }
+
+    public static void setTransition(Timeline transition) {
+        MapController.transition = transition;
+    }
+
+    public static Timeline getEnd() {
+        return end;
+    }
+
+    public static void setEnd(Timeline end) {
+        MapController.end = end;
     }
 }
