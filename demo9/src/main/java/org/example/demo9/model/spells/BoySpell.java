@@ -55,8 +55,9 @@ public class BoySpell implements Spell {
                     if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
                         if(((WizardTower) temp).getAttacking().equals(raider))
                             ((WizardTower) temp).setAttacking(null);
-                    if(temp instanceof Artillery)
-                        ((Artillery) temp).getOnAttackings().remove(raider);
+                    if (temp instanceof Artillery && ((Artillery) temp).getOnAttacking() != null)
+                        if (((Artillery) temp).getOnAttacking().equals(raider))
+                            ((Artillery) temp).setOnAttacking(null);
                     if(temp instanceof DefendTower)
                         ((DefendTower) temp).getOnAttackings().remove(raider);
                 }

@@ -235,11 +235,11 @@ public abstract class Raider
                                             }
                                         }
                                     }
-                                    if(temp instanceof Artillery)
+                                    if(temp instanceof Artillery && !(this instanceof FlierRaider)  && (((Artillery) temp).getOnAttacking()==null || ((Artillery) temp).getOnAttacking().equals(this)))
                                     {
                                         translateX=raider.getTranslateX();
                                         translateY=raider.getTranslateY();
-                                        ((Artillery) temp).getOnAttackings().add(this);
+                                        ((Artillery) temp).setOnAttacking(this);
                                         temp.damage(this);
                                     }
                                 }
@@ -254,8 +254,8 @@ public abstract class Raider
                                         ((DefendTower) temp).setStopping(false);
                                         ((DefendTower) temp).getOnAttackings().remove(this);
                                     }
-                                    if(temp instanceof  Artillery)
-                                        ((Artillery) temp).getOnAttackings().remove(this);
+                                    if(temp instanceof  Artillery && ((Artillery) temp).getOnAttacking()==this)
+                                        ((Artillery) temp).setOnAttacking(null);
                                 }
                             }
                     }
@@ -311,11 +311,11 @@ public abstract class Raider
                                         }
                                     }
                                 }
-                                if(temp instanceof Artillery && !(this instanceof FlierRaider) )
+                                if(temp instanceof Artillery && !(this instanceof FlierRaider)  && (((Artillery) temp).getOnAttacking()==null || ((Artillery) temp).getOnAttacking().equals(this)))
                                 {
                                     translateX=raider.getTranslateX();
                                     translateY=raider.getTranslateY();
-                                    ((Artillery) temp).getOnAttackings().add(this);
+                                    ((Artillery) temp).setOnAttacking(this);
                                     temp.damage(this);
                                 }
                             }
@@ -330,8 +330,8 @@ public abstract class Raider
                                     ((DefendTower) temp).setStopping(false);
                                     ((DefendTower) temp).getOnAttackings().remove(this);
                                 }
-                                if(temp instanceof  Artillery)
-                                    ((Artillery) temp).getOnAttackings().remove(this);
+                                if(temp instanceof  Artillery && ((Artillery) temp).getOnAttacking()==this)
+                                    ((Artillery) temp).setOnAttacking(null);
                             }
                         }
                 }
@@ -417,8 +417,9 @@ public abstract class Raider
                         if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
                             if(((WizardTower) temp).getAttacking().equals(raider))
                                 ((WizardTower) temp).setAttacking(null);
-                        if(temp instanceof Artillery)
-                            ((Artillery) temp).getOnAttackings().remove(raider);
+                        if (temp instanceof Artillery && ((Artillery) temp).getOnAttacking() != null)
+                            if (((Artillery) temp).getOnAttacking().equals(raider))
+                                ((Artillery) temp).setOnAttacking(null);
                         if(temp instanceof DefendTower)
                             ((DefendTower) temp).getOnAttackings().remove(raider);
                     }

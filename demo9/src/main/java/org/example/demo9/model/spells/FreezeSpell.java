@@ -94,11 +94,11 @@ public class FreezeSpell implements Spell {
                                                 }
                                             }
                                         }
-                                        if(temp instanceof Artillery && !(raider instanceof FlierRaider) )
+                                        if(temp instanceof Artillery && !(raider instanceof FlierRaider) && (((Artillery) temp).getOnAttacking()==null || ((Artillery) temp).getOnAttacking().equals(raider)))
                                         {
                                             raider.setTranslateX(raider.getRaider().getTranslateX());
                                             raider.setTranslateY(raider.getRaider().getTranslateY());
-                                            ((Artillery) temp).getOnAttackings().add(raider);
+                                            ((Artillery) temp).setOnAttacking(raider);
                                             temp.damage(raider);
                                         }
                                     }
@@ -113,8 +113,8 @@ public class FreezeSpell implements Spell {
                                             ((DefendTower) temp).setStopping(false);
                                             ((DefendTower) temp).getOnAttackings().remove(raider);
                                         }
-                                        if(temp instanceof  Artillery)
-                                            ((Artillery) temp).getOnAttackings().remove(raider);
+                                        if(temp instanceof  Artillery && ((Artillery) temp).getOnAttacking()==raider)
+                                            ((Artillery) temp).setOnAttacking(null);
                                     }
                                 }
                         }

@@ -20,6 +20,8 @@ import org.example.demo9.controller.Controller;
 import org.example.demo9.controller.PlayerController;
 import org.example.demo9.exceptions.NotEnoughLevel;
 import org.example.demo9.model.Direction;
+import org.example.demo9.model.raiders.DisappearingRaider;
+import org.example.demo9.model.raiders.FlierRaider;
 import org.example.demo9.model.raiders.Raider;
 import org.example.demo9.model.raiders.ShieldRaider;
 
@@ -350,39 +352,64 @@ public abstract class Tower
             }));
             timeline.play();
         }
-        if(this instanceof Artillery)
+        if(this instanceof Artillery && ((Artillery) this).getOnAttacking()!=null)
         {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration),event ->{
-                TranslateTransition transitionY=new TranslateTransition();
-                transitionY.setByY(35);
-                transitionY.setDuration(Duration.millis(200));
-                transitionY.setNode(arrow);
-                transitionY.setCycleCount(1);
-                TranslateTransition transitionX=new TranslateTransition();
-                transitionX.setByX(35);
-                transitionX.setDuration(Duration.millis(200));
-                transitionX.setNode(arrow);
-                transitionX.setCycleCount(1);
-                ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
-                parallelTransition.setCycleCount(1);
-                parallelTransition.play();
+                if(((Artillery) this).getOnAttacking()!=null)
+                {
+                    TranslateTransition transitionY=new TranslateTransition();
+                    transitionY.setByY(((Artillery) this).getOnAttacking().getY()+(((Artillery) this).getOnAttacking().getRaider().getTranslateY()-((Artillery) this).getOnAttacking().getTranslateY())-arrow.getLayoutY());
+                    transitionY.setDuration(Duration.millis(200));
+                    transitionY.setNode(arrow);
+                    transitionY.setCycleCount(1);
+                    TranslateTransition transitionX=new TranslateTransition();
+                    transitionX.setByX(((Artillery) this).getOnAttacking().getX()+(((Artillery) this).getOnAttacking().getRaider().getTranslateX()-((Artillery) this).getOnAttacking().getTranslateX())-arrow.getLayoutX());
+                    transitionX.setDuration(Duration.millis(200));
+                    transitionX.setNode(arrow);
+                    transitionX.setCycleCount(1);
+                    ParallelTransition parallelTransition=new ParallelTransition(arrow,transitionX,transitionY);
+                    parallelTransition.setCycleCount(1);
+                    parallelTransition.play();
+                }
             }));
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(duration+200),event ->{
                 Controller.getController().getMap().getChildren().remove(arrow);
                 arrow.setLayoutX(0); arrow.setLayoutY(0);
-                if(enemy!=null)
+                if(((Artillery) this).getOnAttacking()!=null)
                 {
-                    enemy.setHealth(enemy.getHealth()-this.getDamage());
-                    if(enemy.getHealth()<=0)
+                    ((Artillery) this).getOnAttacking().setHealth(((Artillery) this).getOnAttacking().getHealth()-this.getDamage());
+                    Raider onAttack=((Artillery) this).getOnAttacking();
+                    for(Raider raider:MapController.getMap().getRaidersInMap())
+                        if(raider!=null && onAttack!=null && !(raider instanceof FlierRaider))
+                        {
+                            if(raider instanceof DisappearingRaider && ((DisappearingRaider) raider).isDisapear())
+                                break;
+                            double distance=Math.sqrt((((onAttack.getRaider().getLayoutX()+onAttack.getRaider().getTranslateX())-(raider.getRaider().getLayoutX()+raider.getRaider().getTranslateX()))*((onAttack.getRaider().getLayoutX()+onAttack.getRaider().getTranslateX())-(raider.getRaider().getLayoutX()+raider.getRaider().getTranslateX())))+(((onAttack.getRaider().getLayoutY()+onAttack.getRaider().getTranslateY())-(raider.getRaider().getLayoutY()+raider.getRaider().getTranslateY()))*((onAttack.getRaider().getLayoutY()+onAttack.getRaider().getTranslateY())-(raider.getRaider().getLayoutY()+raider.getRaider().getTranslateY()))));
+                            if(distance<=13)
+                            {
+                                raider.setHealth(raider.getHealth()-this.getDamage());
+                                if(raider.getHealth()<=0)
+                                {
+                                    Controller.getController().getMap().getChildren().remove(raider.getRaider());
+                                    Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(raider.getLoot())));
+                                    MapController.getMap().getRaidersInMap().remove(raider);
+                                    raider.getRaider().setLayoutY(0);
+                                    raider.getRaider().setLayoutX(0);
+                                    raider.getTransition().stop();
+                                    die(raider);
+                                }
+                            }
+                        }
+                    if(((Artillery) this).getOnAttacking().getHealth()<=0)
                     {
-                        Controller.getController().getMap().getChildren().remove(enemy.getRaider());
-                        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(enemy.getLoot())));
-                        MapController.getMap().getRaidersInMap().remove(enemy);
-                        enemy.getRaider().setLayoutY(0);
-                        enemy.getRaider().setLayoutX(0);
-                        enemy.getTransition().stop();
-                        die(enemy);
-                        ((Artillery) this).getOnAttackings().remove(enemy);
+                        Controller.getController().getMap().getChildren().remove(((Artillery) this).getOnAttacking().getRaider());
+                        Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())+(((Artillery) this).getOnAttacking().getLoot())));
+                        MapController.getMap().getRaidersInMap().remove(((Artillery) this).getOnAttacking());
+                        ((Artillery) this).getOnAttacking().getRaider().setLayoutY(0);
+                        ((Artillery) this).getOnAttacking().getRaider().setLayoutX(0);
+                        ((Artillery) this).getOnAttacking().getTransition().stop();
+                        die(((Artillery) this).getOnAttacking());
+                        ((Artillery) this).setOnAttacking(null);
                     }
                 }
             }));
@@ -451,8 +478,9 @@ public abstract class Tower
                     if(temp instanceof WizardTower && ((WizardTower) temp).getAttacking()!=null)
                         if(((WizardTower) temp).getAttacking().equals(raider))
                             ((WizardTower) temp).setAttacking(null);
-                    if(temp instanceof Artillery)
-                        ((Artillery) temp).getOnAttackings().remove(raider);
+                    if (temp instanceof Artillery && ((Artillery) temp).getOnAttacking() != null)
+                        if (((Artillery) temp).getOnAttacking().equals(raider))
+                            ((Artillery) temp).setOnAttacking(null);
                     if(temp instanceof DefendTower)
                         ((DefendTower) temp).getOnAttackings().remove(raider);
                     LosePageController.setGems(LosePageController.getGems()+1);
