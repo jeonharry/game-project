@@ -66,7 +66,7 @@ public class TowerGeneratorController implements Initializable {
         {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())- TowerPrices.ARCHER.getPrice()));
             try{
-                ArcherTower archerTower=new ArcherTower(80+(MapController.getMapNum())*10,20+(5*(MapController.getMapNum()-1)));
+                ArcherTower archerTower=new ArcherTower(80+(MapController.getMapNum())*10,17+(5*(MapController.getMapNum()-1)));
                 map.getTowers().add(archerTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 archerTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);
@@ -217,7 +217,7 @@ public class TowerGeneratorController implements Initializable {
             Controller.getController().getCoins().setText(String.valueOf(Integer.parseInt(Controller.getController().getCoins().getText())-TowerPrices.WIZARD.getPrice()));
             try
             {
-                WizardTower wizardTower=new WizardTower(70+(MapController.getMapNum())*10,25+(5*(MapController.getMapNum()-1)));
+                WizardTower wizardTower=new WizardTower(70+(MapController.getMapNum())*10,22+(5*(MapController.getMapNum()-1)));
                 map.getTowers().add(wizardTower);
                 Controller.getController().getMap().getChildren().remove(Controller.getController().getTowerPlace());
                 wizardTower.getTower().setLayoutX(Controller.getController().getSelectedTower().getLayoutX()+65-28);

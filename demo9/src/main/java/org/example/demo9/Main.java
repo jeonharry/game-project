@@ -210,12 +210,12 @@ public class Main extends Application {
         road42.add(makeSpot(260.0,187.0));
         road42.add(makeSpot(354.0,195.0));
         road42.add(makeSpot(392.0,236.0));
-        road41.add(makeSpot(253.0,302.0));
-        road41.add(makeSpot(237.0,369.0));
-        road41.add(makeSpot(319.0,387.0));
-        road41.add(makeSpot(548.0,320.0));
-        road41.add(makeSpot(658.0,309.0));
-        road41.add(makeSpot(760.0,327.0));
+        road42.add(makeSpot(253.0,302.0));
+        road42.add(makeSpot(237.0,369.0));
+        road42.add(makeSpot(319.0,387.0));
+        road42.add(makeSpot(548.0,320.0));
+        road42.add(makeSpot(658.0,309.0));
+        road42.add(makeSpot(760.0,327.0));
         roads4.add(road42);
         ArrayList <Direction> directions4=new ArrayList<>();
         directions4.add(Direction.UP);

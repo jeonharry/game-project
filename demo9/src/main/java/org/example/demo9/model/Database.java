@@ -92,7 +92,7 @@ public class Database
             player.setLevel(rs.getInt("level"));
             player.setGems(rs.getInt("gems"));
         }
-        cmd="SELECT spell FROM backpacks INNER JOIN players ON backpacks.ID=players.ID WHERE logedin.ID="+player.getID();
+        cmd="SELECT spell FROM backpacks INNER JOIN players ON backpacks.ID=players.ID WHERE players.ID="+player.getID();
         statement=con.prepareStatement(cmd);
         rs=statement.executeQuery(cmd);
         while (rs.next())

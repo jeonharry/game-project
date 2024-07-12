@@ -199,7 +199,7 @@ public abstract class Tower
     }
     public void destroy()
     {
-        TowerGeneratorController.getMap().getTowers().remove(this);
+        MapController.getMap().getTowers().remove(this);
         Controller.getController().getMap().getChildren().remove(this.getTower());
         Ellipse ellipse=new Ellipse(); ellipse.setLayoutX(this.getTower().getLayoutX()+30); ellipse.setLayoutY(this.getTower().getLayoutY()+40);
         ellipse.setFill(Color.TRANSPARENT); ellipse.setStroke(Color.TRANSPARENT); ellipse.setRadiusX(30); ellipse.setRadiusY(23); ellipse.setCursor(Cursor.HAND);

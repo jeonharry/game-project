@@ -84,20 +84,20 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    void pickBoy(MouseEvent event) throws Exception {
+    void pickBoy(MouseEvent event) {
         try
         {
             Spell spell=PlayerController.getPlayerController().useSpell("boy");
             loadSpells();
             spell.drop();
             use=true;
+            time=System.currentTimeMillis();
             spells.setVisible(false);
         }catch (Exception exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("error");
             alert.setHeaderText(exception.getMessage());
             alert.showAndWait();
-            throw exception;
         }
     }
 
@@ -109,6 +109,7 @@ public class MapController implements Initializable {
             loadSpells();
             spell.drop();
             use=true;
+            time=System.currentTimeMillis();
             spells.setVisible(false);
         }catch (Exception exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -126,6 +127,7 @@ public class MapController implements Initializable {
             loadSpells();
             spell.drop();
             use=true;
+            time=System.currentTimeMillis();
             spells.setVisible(false);
         }catch (Exception exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -143,6 +145,7 @@ public class MapController implements Initializable {
             loadSpells();
             spell.drop();
             use=true;
+            time=System.currentTimeMillis();
             spells.setVisible(false);
         }catch (Exception exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -158,7 +161,6 @@ public class MapController implements Initializable {
         {
             if(System.currentTimeMillis()-time>=6000)
             {
-                time=System.currentTimeMillis();
                 spells.setVisible(!spells.isVisible());
             }
         }
@@ -297,13 +299,13 @@ public class MapController implements Initializable {
                 if(counter>=roads.size())
                     counter=0;
                 if(random.nextInt(4+(mapNum-1))==0)
-                raider=new FlierRaider(45+((mapNum-1)*10),30+((mapNum-1)*30),roads.get(counter));
+                raider=new FlierRaider(45+((mapNum-1)*10),10+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==1)
-                    raider=new FastRaider(40+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
+                    raider=new FastRaider(40+((mapNum-1)*10),15+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==2)
-                    raider=new DisappearingRaider(35+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),15+((mapNum-1)*30),roads.get(counter));
                 else
-                    raider=new ShieldRaider(70+((mapNum-1)*10),40+((mapNum-1)*30),roads.get(counter));
+                    raider=new ShieldRaider(70+((mapNum-1)*10),20+((mapNum-1)*30),roads.get(counter));
                 if(counter<roads.size())
                     counter++;
             }
@@ -313,13 +315,13 @@ public class MapController implements Initializable {
                 if(counter>=roads.size())
                     counter=0;
                 if(random.nextInt(4+(mapNum-1))==0)
-                    raider=new FlierRaider(45+((mapNum-1)*10),30+((mapNum-1)*30),roads.get(counter));
+                    raider=new FlierRaider(45+((mapNum-1)*10),20+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==1)
-                    raider=new FastRaider(40+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
+                    raider=new FastRaider(40+((mapNum-1)*10),25+((mapNum-1)*30),roads.get(counter));
                 else if(random.nextInt(4+(mapNum-1))==2)
-                    raider=new DisappearingRaider(35+((mapNum-1)*10),35+((mapNum-1)*30),roads.get(counter));
+                    raider=new DisappearingRaider(35+((mapNum-1)*10),25+((mapNum-1)*30),roads.get(counter));
                 else
-                    raider=new ShieldRaider(70+((mapNum-1)*10),40+((mapNum-1)*30),roads.get(counter));
+                    raider=new ShieldRaider(70+((mapNum-1)*10),30+((mapNum-1)*30),roads.get(counter));
                 if(counter<roads.size())
                     counter++;
             }
